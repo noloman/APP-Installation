@@ -1,5 +1,7 @@
-# APP-Instalations
-Android APP for trace devices
+# APP-Installation
+
+Android APP for trace devices scanning a QR Code
+Generates a JSON file that is downloadable and uploaded to a hardcoded ftp server
 
 # Historical status
 

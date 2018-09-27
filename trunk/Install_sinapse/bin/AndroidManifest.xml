@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest 
+    package="install.sinapse"
+    android:versionCode="1"
+    android:versionName="1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="21" />
+    
+    <uses-feature android:name="android.hardware.camera"/>
+	<uses-feature android:name="android.hardware.sensor.accelerometer"/>
+	<uses-feature android:name="android.hardware.sensor.compass"/>
+	<uses-feature android:name="android.hardware.location"/>
+    
+    <uses-feature 
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+    <permission
+        android:name="install.sinapse.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+    
+    <uses-permission android:name="android.permission.CAMERA"/>
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<!--<uses-permission android:name="com.geomobile.arcore.permission.MAPS_RECEIVE"/> !-->
+	<uses-permission android:name="install.sinapse.permission.MAPS_RECEIVE"/>
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE" /> 
+    
+	<!--class="com.google.android.gms.maps.MapFragment"  -->
+    <application
+        android:theme="@style/AppTheme"
+        android:allowBackup="true"
+        android:icon="@drawable/icono2"
+        android:label="@string/app_name" >    
+		    <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+		    
+		     <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyA68PLDnE-qbKSv_KeBE0NtUGywrDpCabE" />
+		     
+		 
+		 <activity
+            android:name="install.sinapse.Index"
+             android:label="@string/app_name" 
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:stateNotNeeded="true" >
+             <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+		</activity> 
+		  <activity
+            android:name="install.sinapse.Install_sinapseActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>   
+        <!--<activity
+            android:name="install.sinapse.Install_sinapseActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>   -->
+        <activity
+            android:name="install.sinapse.Gps_activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="install.sinapse.balastcod_activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="install.sinapse.Resumen_activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="install.sinapse.Replace_Activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="install.sinapse.PreferencesActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="install.sinapse.ListaParteTrabajo"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        
+      
+        <activity android:name="install.sinapse.MapsActivity" > </activity> 
+
+         <activity
+            android:name="install.sinapse.ComienzoInstalacion_activity"
+            android:label="@string/app_name" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+		
+        <activity
+            android:name="install.sinapse.formPunto_activity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="install.sinapse.formCuadro_activity"
+            android:label="@string/app_name" 
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+            </intent-filter>
+        </activity> 
+        
+         <activity
+            android:name="install.sinapse.PuntoAcceso_activity"
+            android:label="@string/app_name" 
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="install.sinapse.OtroDispositivo_activity"
+            android:label="@string/app_name" 
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+            </intent-filter>
+        </activity>
+        
+          <activity
+            android:name="install.sinapse.formCircuito_activity"
+            android:label="@string/app_name" 
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+            </intent-filter>
+        </activity> 
+    </application>
+
+</manifest>

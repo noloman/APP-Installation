@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+     <LinearLayout 
+        android:id="@+id/menu_cuadro"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginTop="15px" >
+        
+       
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circuitos del cuadro"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+        <View
+			android:layout_width="fill_parent"
+			android:layout_height="2dp"
+			android:background="@android:color/black"/>
+       
+       <View
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:background="@android:color/black"/>
+       <TextView
+            android:id="@+id/circuito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Circuito"
+             android:layout_marginLeft="10px"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+       	  <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent"
+           android:layout_marginLeft="15px"
+           android:layout_marginRight="15px">
+		  <TextView
+        android:id="@+id/textCirNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+          <EditText
+          android:id="@+id/circuito_nombre"   
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+          </LinearLayout>
+           
+           <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent"
+           android:layout_marginLeft="15px"
+           android:layout_marginRight="15px"
+           android:layout_marginBottom="15px">
+		  <TextView
+        android:id="@+id/textCirTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" 
+         android:inputType="textMultiLine"/>
+            <EditText
+          android:id="@+id/circuito_tipo"   
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"/>
+            </LinearLayout>
+            <CheckBox
+          android:id="@+id/reloj_telegestion"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:text="Telegestión"
+         android:checked="false" 
+         android:layout_marginBottom="20px"
+         android:layout_marginLeft="15px"/>                     
+
+           <RelativeLayout
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+                   android:layout_marginBottom="15px" >
+
+            <ImageButton
+                android:id="@+id/ButtonAtras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+               
+                    android:background="@drawable/transparent"
+                android:src="@drawable/atras2" />
+
+            <ImageButton
+                android:id="@+id/continueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+               
+                android:layout_marginRight="15px"
+                  android:background="@drawable/transparent"
+                android:src="@drawable/continuar2" />
+
+         </RelativeLayout>
+        
+     	</LinearLayout>
+    
+
+</LinearLayout>
+

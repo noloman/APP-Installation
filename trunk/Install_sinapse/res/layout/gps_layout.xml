@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+  <LinearLayout
+        android:id="@+id/menu_gps"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginTop="15px" >
+
+      
+
+        <TextView
+            android:id="@+id/textGPSTomando"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Localización del Punto"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000" >
+        </TextView>
+        
+    <ImageButton
+        android:id="@+id/GPSButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent"
+        android:src="@drawable/gps2" >
+    </ImageButton>
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Obteniendo las coordenadas GPS..."
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:text="Dirección:"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/myaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" >
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dip"
+                android:background="@drawable/transparent"
+                android:src="@drawable/maps2" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pulsa aquí para ver mapa" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="fill_parent"
+            android:layout_height="5dip"
+            android:background="@drawable/mygradient" />
+
+		
+        <TextView
+            android:id="@+id/TextoECoBalast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15px"
+            android:text="Pulse para escanear el dispositivo"
+            android:layout_gravity="center"
+             android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000" >
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/scanButton"
+            android:layout_marginTop="20px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+           	android:background="@drawable/transparent"
+            android:src="@drawable/scanner" >
+        </ImageButton>
+
+        <TextView
+            android:id="@+id/RefRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="">
+            <!--  android:textAppearance="@style/BoldFont"--> 
+        </TextView>
+ 
+    </LinearLayout>
+
+</ScrollView>

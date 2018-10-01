@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">SHI</string>
+	<string name="MenuID">Id de la instalación:</string>
+	<string name="IDInstalacion">PTORE5</string>
+	<string name="MenuReemp">Reemplazo de un punto de la instalación.</string>
+    
+    <string-array
+        name="CalidadGPS">
+        <item>ALTA</item>
+        <item>MEDIA</item>
+    </string-array>
+	<string-array
+        name="IMEI">
+        <item>352166050946790</item>
+        <item>352166050947129</item> 
+        <item>351870052524031</item>
+        <item>357453045179488</item>
+        <item>356708049105891</item>
+        <item>355430048201040</item>
+        <item>351722057666855</item>
+        <item>351722057666848</item>
+        <item>868017000256524</item>
+        <item>359901048046193</item>
+        <item>353058053760949</item>
+        <item>351722057894366</item>
+        <item>353103054932681</item>
+        <item>RJ1BB40237J</item>
+        <item>353103054932681</item>
+        <item>359827047500023</item>
+        <item>356508052218551</item>
+        <item>357506059252135</item>
+        <item>356980050072985</item>
+        <item>862741010283501</item>
+        <item>862741010283519</item>
+        <!-- Mi imei -->
+        
+    </string-array>
+
+	<string-array name="balastos_array">
+		<item> </item>
+		<item>Sinapse(con código qr)</item>
+		<item>Otra marca(sin código qr)</item>
+	</string-array>
+
+	<string-array name="potbalast_array">
+	    <item>0 </item>
+	    <item>30</item>
+	    <item>40</item>
+	    <item>50</item>
+	    <item>60</item>
+	    <item>100</item>
+		<item>150</item>
+		<item>250</item>
+		<item>400</item>
+	</string-array>
+	
+	<string-array name="potbalast_array2">
+	    <item>Selecciona: </item>
+	    <item>30</item>
+	    <item>40</item>
+	    <item>50</item>
+	    <item>60</item>
+	    <item>70</item>
+	    <item>80</item>
+	    <item>90</item>
+		<item>100</item>
+	    <item>150</item>
+	    <item>250</item>
+	    <item>400</item>
+		<item>600</item>
+		<item>1000</item>
+	</string-array>
+
+	<string-array name="potled_array">
+		<item>15</item>
+		<item>40</item>
+		<item>45</item>
+		<item>50</item>
+		<item>60</item>
+		<item>70</item>
+		<item>80</item>
+		<item>100</item>
+		<item>120</item>
+		<item>150</item>
+		<item>185</item>
+		<item>240</item>
+		<item>320</item>
+	</string-array>
+
+	<string-array name="lamp_array2">
+	    <item>Selecciona: </item>
+		<item>VSAP</item>
+		<item>LED</item>
+		<item>HM</item>
+		<item>VM</item>
+		<item>Fluorescente</item>
+		<item>TL5C</item>
+		<item>PL-C/T</item>
+		<item>PL-L</item>
+	</string-array>
+	
+	    
+	  <string-array name="lamp_array">
+	    <item>VSAP</item>
+		<item>HM</item>
+		<item>VM</item>
+		<item>LED</item>
+	</string-array>
+
+	<string-array name="tipo_array2">
+	    <item>Selecciona: </item>
+		<item>Electrónico</item>
+		<item>Ferromagnético</item>
+		<item>Driver LED</item>
+	</string-array>
+	
+	 <string-array name="tipo_array">
+	    <item>Selecciona: </item>
+		<item>Electrónico</item>
+		<item>Ferromagnético</item>
+		<item>Driver LED</item>
+	</string-array>
+
+	<string-array name="marcas_array2">
+	    <item>Selecciona: </item>
+		<item>Philips</item>
+		<item>Meanwell</item>
+		<item>Tridonic</item>
+		<item>ELT</item>
+		<item>ETI</item>
+		<item>HP</item>
+		<item>HEP</item>
+	</string-array>
+	
+	<string-array name="marcas_array">
+	    <item> </item>
+	    <item>PHILIPS</item>
+	   	<item>HEP</item>
+	   	<item>BPR</item>
+	   	<item>MEANWELL</item>
+	   	<item>TRIDONIC</item>
+	   	<item>OTROS</item>
+	 </string-array>
+	<string name="LumSust">Cambio de lámpara</string>
+	<string name="TarjetaNoMontada">SD Card no colocada</string>
+	<string name="FicheroKMLNoExiste">Fichero KML creado</string>
+	<string name="FicheroIDNoExiste">Fichero IdInstall creado</string>
+	<string name="NoESCTarjeta">Imposible escribir en la tarjeta SD</string>
+	<string name="fichero">: FICHERO: </string>
+	<string name="ErrorFichero">Error al cerrar el fichero</string>
+	<string name="RequiereGoogleEarth">Esta app necesita Google Earth. ¿Quieres instalarlo ahora?</string>
+    <string name="InstalaGE">¿Instalar Google Earth?</string>
+    <string name="Si">Si</string>
+    <string name="No">No</string>
+    <string name="GPSMenu">GPS localizacion del dispositivo</string>
+    <string name="GPSDescri">Para ubicar el dispositivo, toca en el icono</string>
+    <string name="Direccion">Dirección: </string>
+    <string name="Escanear">Escanea código del punto</string>
+    <string name="UbicacionActual">Ver ubicacion actual: </string>
+    <string name="GPSEscribir">Escribe las coordenadas</string>
+    <string name="Longitud">Longitud</string>
+    <string name="Latitud">Latitud</string>
+        <string name="GPSLongitud">Longitud</string>
+    <string name="GPSLatitud">Latitud</string>
+    <string name="KMLnoexiste">El fichero KML no existe, por lo que el dispositivo podría no haberlo añadido al mapa.</string>
+
+    <string-array name="soporte_tipo">
+	    <item> </item>
+	    <item>BRAZO</item>
+	   	<item>BACULO</item>
+	   	<item>COLUMNA</item>
+	   	<item>CATENARIA</item>
+	   	<item>DIRECTO_PARED</item>
+	   	<item>OTROS</item>
+	 </string-array>
+	 <string-array name="luminaria_tipo">
+	    <item> </item>
+	    <item>FAROL</item>
+	   	<item>FAROL_BLOQUE_OPTICO</item>
+	   	<item>ESFERICA</item>
+	   	<item>ESFERICA_REFLECTOR</item>
+	   	<item>ASIMETRICA_ABIERTA</item>
+	   	<item>ASIMETRICA_CERRADA</item>
+	   	<item>PROYECTOR</item>
+	   	<item>OTROS</item>
+	 </string-array>
+	 <string-array name="fuente_tipo">
+	    <item> </item>
+	    <item>VAPOR_MERCURIO</item>
+	   	<item>LUZ_MEZCLA</item>
+	   	<item>VAPOR_SODIO_ALTA_PRESION</item>
+	   	<item>VAPOR_SODIO_BAJA_PRESION</item>
+	   	<item>HALOGENUROS_METALICOS</item>
+	   	<item>LAMPARAS_FLUORESCENTES</item>
+	   	<item>LAMPARAS_FLUORESCENTES_COMPACTAS</item>
+	   	<item>LED</item>
+	   	<item>INCANDESCENCIA</item>
+	   	<item>OTROS</item>
+	 </string-array>  
+	  <string-array name="tipo_comando">
+	      <item> </item>
+	    <item>MANUAL</item>
+	   	<item>CONTROL_CABECERA</item>
+	   	<item>FOTOCELDA</item>
+	   	<item>RELOJ_ASTRONOMICO</item>
+	  </string-array>
+	   <string-array name="tipo_punto">
+	    <item>SIMPLE</item>
+	   	<item>DOBLE</item>
+	  </string-array>
+	   <string-array name="tipo_balasto">
+	       <item> </item>
+	    <item>BALASTO_ELECTROMAGNETICO_DE_SIMPLE_NIVEL</item>
+	   	<item>BALASTO_ELECTROMAGNETICO_DE_DOBLE_NIVEL</item>
+	   	<item>BALASTO_ELECTRONICO</item>
+	   	<item>DRIVER_LED</item>
+	  </string-array>
+	  
+	    <string-array name="tipo_control">
+	    <item>0</item>
+	   	<item>1</item>
+	   	<item>2</item>
+	   	<item>3</item>
+	   	<item>4</item>
+	   	<item>5</item>
+	   	<item>6</item>
+	   	<item>7</item>
+	  </string-array>
+	  
+	   <string-array name="tipo_rele">
+	    <item> </item>
+	    <item>GENERAL</item>
+	   	<item>CIRCUITO_1</item>
+	   	<item>CIRCUITO_2</item>
+	   	<item>CIRCUITO_3</item>
+	   	<item>LINEA_MANDO</item>
+	   	<item>OTROS</item>
+	  </string-array>
+	  
+	     <string-array name="tipo_regulacion">
+	    <item>1-10V</item>
+	   	<item>DALI</item>
+	   	<item>DOBLE_NIVEL</item>
+	   	<item>DIGITAL</item>
+	   	<item>OTROS</item>
+	   	<item>NINGUNA</item>
+	  </string-array>
+</resources>

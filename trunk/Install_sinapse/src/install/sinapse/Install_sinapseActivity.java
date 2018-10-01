@@ -1,11 +1,39 @@
 // **** FUNCION PRINCIPAL DE LA APLICACION ****
 // Autor: Celia Moreno 
 // ********************************************
-// Esta actividad llama a Gps_activity para aï¿½adir un nuevo punto de la instalacion
-// Asï¿½ mismo cuando se desea reemplazar una radio, se llama a la actividad Replace
+// Esta actividad llama a Gps_activity para añadir un nuevo punto de la instalacion
+// Así mismo cuando se desea reemplazar una radio, se llama a la actividad Replace
 
 package install.sinapse;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
+import org.apache.commons.net.ftp.FTPClient;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
+
+import install.sinapse.GlobalClass;
+import install.sinapse.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -28,37 +56,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
-
-import org.apache.commons.net.ftp.FTPClient;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
-public class Install_sinapseActivity extends Activity
+public class Install_sinapseActivity extends Activity 
 {
 	TextView instalacionText;
 	boolean flagEarth = false;
@@ -73,35 +76,35 @@ public class Install_sinapseActivity extends Activity
 	GlobalClass global = new GlobalClass();
 	String[] directorio_archivos;
 	File root = Environment.getExternalStorageDirectory(); 		//Accedemos a la tarjeta SD
-	File logsDirectory = new File(root + "/sinapse/install/"); 	//Direcciï¿½n del directorio
+	File logsDirectory = new File(root + "/sinapse/install/"); 	//Dirección del directorio
 	boolean archivos_subidos = true;
-
+	
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void onCreate(Bundle savedInstanceState) 
 	{
 		setContentView(R.layout.main);
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+		
 		addButton = (ImageButton) findViewById(R.id.addButton);
 		replaceButton = (ImageButton) findViewById(R.id.replaceButton);
 		//instalacionText = (TextView)findViewById(R.id.InstalacionText);
 		subirJSON = (ImageButton)findViewById(R.id.subirJSON);
 		parteTrabajo = (ImageButton)findViewById(R.id.parteTrabajo);
 		kml = (ImageButton)findViewById(R.id.verPuntos);
-
+		
 	     try {
 				GlobalClass.global_localiz = NombreInstalacion(root + "/sinapse/install/IdInstall.txt");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
-		//Aï¿½adir un punto de instalaciï¿½n
-		this.addButton.setOnClickListener(new OnClickListener()
+	     
+		//Añadir un punto de instalación
+		this.addButton.setOnClickListener(new OnClickListener() 
 		{
-			public void onClick(View v)
+			public void onClick(View v) 
 			{
 				reiniciavariables();
 
@@ -111,11 +114,11 @@ public class Install_sinapseActivity extends Activity
 				finish();
 			}
 		});
-
-		//Reemplazar un punto de instalaciï¿½n
-		this.replaceButton.setOnClickListener(new OnClickListener()
+		
+		//Reemplazar un punto de instalación
+		this.replaceButton.setOnClickListener(new OnClickListener() 
 		{
-			public void onClick(View v)
+			public void onClick(View v) 
 			{
 				reiniciavariables();
 
@@ -125,45 +128,45 @@ public class Install_sinapseActivity extends Activity
 				finish();
 			}
 		});
-
+		
 		this.subirJSON.setOnClickListener(new OnClickListener()
 		{
 
 			@Override
-			public void onClick(View arg0)
+			public void onClick(View arg0) 
 			{
-				lanzaavisoSubir();
+				lanzaavisoSubir(); 
 			}
-
+			
 		});
-
+		
 		parteTrabajo.setOnClickListener(new OnClickListener()
 		{
 
 			@Override
-			public void onClick(View arg0)
+			public void onClick(View arg0) 
 			{
 				GlobalClass.comentario="";
 				Intent i = new Intent(getApplicationContext(), ListaParteTrabajo.class);
 				startActivity(i);
 			}
-
+			
 		});
-
+		
 		kml.setOnClickListener(new OnClickListener()
 		{
 
 			@Override
-			public void onClick(View arg0)
+			public void onClick(View arg0) 
 			{
-
+				
 				String fecha = ((new SimpleDateFormat("yyyy-MM-dd",Locale.GERMANY).format(new Date())).toString()); //Recojo la fecha de hoy
 				String srvcName = Context.TELEPHONY_SERVICE;
 				TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
 				String deviceId = telephonyManager.getDeviceId(); 													//Recojo el IMEI
 				File file = new File(Environment.getExternalStorageDirectory(), "/sinapse/install/Mapa Sinapse Instalaciones-"+deviceId+"-"+fecha+".kml");
-
-					try
+					
+					try 
 					{
 						Intent intent = new Intent(Intent.ACTION_VIEW);
 						//intent.setDataAndType(Uri.fromFile(archivo_kmz), "application/vnd.google-earth.kmz+xml");
@@ -171,7 +174,7 @@ public class Install_sinapseActivity extends Activity
 						intent.putExtra("com.google.earth.EXTRA.tour_feature_id", "my_track");
 						startActivity(intent);
 					}
-					catch (ActivityNotFoundException e)
+					catch (ActivityNotFoundException e) 
 					{
 						onPause();
 						flagEarth = true;
@@ -179,7 +182,7 @@ public class Install_sinapseActivity extends Activity
 
 					}
 			}
-
+			
 		});
 		createFile("Mapa Sinapse Instalaciones",GlobalClass.CabeceraKML);
 	}
@@ -211,35 +214,35 @@ public class Install_sinapseActivity extends Activity
 
 		}
 	@Override
-	protected void onResume()
+	protected void onResume() 
 	{
 		super.onResume();
 
 	}
 
 	@Override
-	protected void onPause()
+	protected void onPause() 
 	{
 		super.onPause();
 	}
 
 	@Override
-	protected void onStop()
+	protected void onStop() 
 	{
 		super.onStop();
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
+	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 	    getMenuInflater().inflate(R.menu.menu_gps, menu);
 	    return true;
 	}
-
+	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
+	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-	    switch (item.getItemId())
+	    switch (item.getItemId()) 
 	    {
 	        case R.id.MnuGPS:
 	            Intent i = new Intent();
@@ -252,51 +255,51 @@ public class Install_sinapseActivity extends Activity
 	            startActivity(i2);
 	            finish();
 	            return true;*/
-
+	        
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
 	// Crea una alerta de que no hay coordenadas GPS correctas
-	private void alerta3G()
+	private void alerta3G() 
 	{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-			builder.setMessage("Estï¿½s conectado por 3G. El proceso puede tardar un tiempo. ï¿½Desea continuar?")
+			 
+			builder.setMessage("Estás conectado por 3G. El proceso puede tardar un tiempo. ¿Desea continuar?")
 			.setTitle("Confirmacion")
-			.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()
+			.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  
 			{
-			      public void onClick(DialogInterface dialog, int id)
+			      public void onClick(DialogInterface dialog, int id) 
 			      {
 			            Log.i("Dialogos", "Confirmacion Aceptada.");
 			            SubirJSON();
 			            dialog.cancel();
 			      }
 			})
-			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
+			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
 			{
-			      public void onClick(DialogInterface dialog, int id)
+			      public void onClick(DialogInterface dialog, int id) 
 			      {
 			            Log.i("Dialogos", "Confirmacion Cancelada.");
 			            dialog.cancel();
 			      }
 			});
-
+			        
 			AlertDialog alert = builder.create();
 			alert.show();
 	}
-
+	
 	// Comprueba que el IMEI del terminal esta en mi lista
-	private boolean compruebaIMEI()
+	private boolean compruebaIMEI() 
 	{
 		String[] IMEI = getResources().getStringArray(R.array.IMEI);
 		String srvcName = Context.TELEPHONY_SERVICE;
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
 		String deviceId = telephonyManager.getDeviceId();
 		int i = 0;
-		for (i = 0; i < IMEI.length; ++i)
+		for (i = 0; i < IMEI.length; ++i) 
 		{
-			if (IMEI[i].equals(deviceId))
+			if (IMEI[i].equals(deviceId)) 
 			{
 				return true;
 			}
@@ -306,17 +309,17 @@ public class Install_sinapseActivity extends Activity
 	}
 
 	// Crea una alerta de que el IMEI del terminal no es correcto
-	private void alertaIMEI()
+	private void alertaIMEI() 
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(
-							"Su terminal no permite el uso de esta aplicaciï¿½n. "
-						  + "Pï¿½ngase en contacto con Sinapse Energï¿½a")
+							"Su terminal no permite el uso de esta aplicación. "
+						  + "Póngase en contacto con Sinapse Energía")
 						  .setCancelable(false)
 						  .setPositiveButton("Llamar a Soporte Sinapse",
-								  			new DialogInterface.OnClickListener()
+								  			new DialogInterface.OnClickListener() 
 						  					{
-							  					public void onClick(DialogInterface dialog, int id)
+							  					public void onClick(DialogInterface dialog, int id) 
 							  					{
 							  						llamarSoporteSinapse();
 							  					}
@@ -326,38 +329,38 @@ public class Install_sinapseActivity extends Activity
 		alert.show();
 	}
 
-	private void llamarSoporteSinapse()
+	private void llamarSoporteSinapse() 
 	{
-		try
+		try 
 		{
-			startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:668879004")));
+			startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:668879004")));
 			finish();
-		}
-		catch (Exception e)
+		} 
+		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
 		finish();
 	}
-	public boolean createFile(String nombrefichero, String cabecera)
+	public boolean createFile(String nombrefichero, String cabecera) 
 	{
 		boolean flag = false;
-
+		
 		String srvcName = Context.TELEPHONY_SERVICE;
 		TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
 		String deviceId = telephonyManager.getDeviceId();
 		String fecha = ((new SimpleDateFormat("yyyy-MM-dd",Locale.GERMANY).format(new Date())).toString());
 
-		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+		if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) 
 		{
 			Toast.makeText(this, R.string.TarjetaNoMontada, Toast.LENGTH_LONG).show();
-		}
-		else
+		} 
+		else 
 		{
 			File nmea_file;
 			File root = Environment.getExternalStorageDirectory();
 			FileWriter nmea_writer = null;
-			try
+			try 
 			{
 				// create a File object for the parent directory
 				File logsDirectory = new File(root + "/sinapse/install/");
@@ -369,7 +372,7 @@ public class Install_sinapseActivity extends Activity
 				// tendremos que subir al FTP
 				//GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + GlobalClass.global_localiz + "-" + deviceId +"-"+fecha+ ".kml";
 				GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + deviceId +"-"+fecha+ ".kml";
-				if (!nmea_file.exists())
+				if (!nmea_file.exists()) 
 				{
 					flag = nmea_file.createNewFile();
 					Toast.makeText(this,R.string.FicheroKMLNoExiste,Toast.LENGTH_LONG).show();
@@ -380,21 +383,21 @@ public class Install_sinapseActivity extends Activity
 					nmea_writer.append(nmea);
 					nmea_writer.flush();
 				}
-			}
-			catch (IOException ex)
+			} 
+			catch (IOException ex) 
 			{
 				Toast.makeText(this,R.string.NoESCTarjeta,Toast.LENGTH_LONG).show();
 				Toast.makeText(this, ex.getMessage().toString() + R.string.fichero + GlobalClass.FicheroKML,Toast.LENGTH_LONG).show();
-			}
-			finally
+			} 
+			finally 
 			{
-				if (nmea_writer != null)
+				if (nmea_writer != null) 
 				{
-					try
+					try 
 					{
 						nmea_writer.close();
-					}
-					catch (IOException e)
+					} 
+					catch (IOException e) 
 					{
 						Toast.makeText(this, R.string.ErrorFichero,Toast.LENGTH_LONG).show();
 					}
@@ -405,13 +408,13 @@ public class Install_sinapseActivity extends Activity
 		return flag;
 
 	}
-
-	public void lanzaavisoSubir()
+	
+	public void lanzaavisoSubir() 
 	{
 		AlertDialog.Builder popup = new AlertDialog.Builder(this);
 		popup.setTitle("Subir archivos");
-		popup.setMessage("ï¿½Deseas realizar la acciï¿½n?");
-		popup.setPositiveButton("Confirmar", new DialogInterface.OnClickListener()
+		popup.setMessage("¿Deseas realizar la acción?");
+		popup.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int id)
 			{
@@ -419,44 +422,44 @@ public class Install_sinapseActivity extends Activity
 				//el cual se encarga de todas las conexiones del terminal
 				ConnectivityManager conMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 				//Recogemos el estado del 3G
-				//como vemos se recoge con el parï¿½metro 0
+				//como vemos se recoge con el parámetro 0
 				State internet_movil = conMan.getNetworkInfo(0).getState();
 				//Recogemos el estado del wifi
-				//En este caso se recoge con el parï¿½metro 1
+				//En este caso se recoge con el parámetro 1
 				State wifi = conMan.getNetworkInfo(1).getState();
-				//Miramos si el internet 3G estï¿½ conectado o conectandose...
-				if (internet_movil == NetworkInfo.State.CONNECTED|| internet_movil == NetworkInfo.State.CONNECTING)
+				//Miramos si el internet 3G está conectado o conectandose...
+				if (internet_movil == NetworkInfo.State.CONNECTED|| internet_movil == NetworkInfo.State.CONNECTING) 
 				{
 				     ///////////////
-				     //El movil estï¿½ conectado por 3G
-				     //En este ejemplo mostrarï¿½amos mensaje por pantalla
+				     //El movil está conectado por 3G
+				     //En este ejemplo mostraríamos mensaje por pantalla
 				     //Toast.makeText(getApplicationContext(), "Conectado por 3G", Toast.LENGTH_LONG).show();
-				     //Si no esta por 3G comprovamos si estï¿½ conectado o conectandose al wifi...
-				    Log.i("Estado","Subiendo archivos por 3G");
+				     //Si no esta por 3G comprovamos si está conectado o conectandose al wifi...
+				    Log.i("Estado","Subiendo archivos por 3G"); 
 				    alerta3G();
-				}
-				else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING)
+				} 
+				else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) 
 				{
 				     ///////////////
-				     //El movil estï¿½ conectado por WIFI
-				     //En este ejemplo mostrarï¿½amos mensaje por pantalla
+				     //El movil está conectado por WIFI
+				     //En este ejemplo mostraríamos mensaje por pantalla
 				     //Toast.makeText(getApplicationContext(), "Conectado por WIFI", Toast.LENGTH_LONG).show();
-					Log.i("Estado","Subiendo archivos por WIFI");
+					Log.i("Estado","Subiendo archivos por WIFI"); 
 					SubirJSON();
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexiï¿½n", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexión", Toast.LENGTH_LONG).show();
 				}
-
+				
 			}
 		});
 		popup.setNegativeButton("Cancelar", null);
 		popup.show();
 	}
-
+	
 	// Reinicia las variables globales
-	private void reiniciavariables()
+	private void reiniciavariables() 
 	{
 		GlobalClass.longitud = 0.00000000;
 		GlobalClass.latitud = 0.00000000;
@@ -486,7 +489,7 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.global_PC = "";
 		GlobalClass.global_BR = "";
 		GlobalClass.global_Otro = "";
-
+		
 		GlobalClass.nombre_punto = "";
 		GlobalClass.alturaDisp = 0;
 		GlobalClass.id_node = "";
@@ -495,7 +498,7 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.regulacion = "";
 		GlobalClass.medida = false;
 		GlobalClass.cambio_bombilla = false;
-
+		
 		GlobalClass.tipo_punto = "";
 		GlobalClass.tipo_puntoAux = "";
 		GlobalClass.balasto_id = "";
@@ -509,7 +512,7 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.tipo_balasto2 = "";
 		GlobalClass.balasto2_perdida = 0;
 		GlobalClass.lumBalast = "";
-
+			
 		try {
 			GlobalClass.punto_luz_id = idPunto();
 			GlobalClass.cuadro_id = idCuadro();
@@ -522,7 +525,7 @@ public class Install_sinapseActivity extends Activity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		GlobalClass.punto_luz_nombre = "";
 		GlobalClass.punto_luz_altura = 0.0;
 		GlobalClass.punto_luz_cuadro = "";
@@ -535,7 +538,7 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.fuente_luz_marca = "";
 		GlobalClass.fuente_luz_modelo = "";
 		GlobalClass.fuente_luz_potencia = 0;
-
+			
 		GlobalClass.cuadro_nombre = "";
 		GlobalClass.cuadro_altura = 0.00;
 		GlobalClass.cuadro_numero_suministro = "";
@@ -548,9 +551,9 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.circuito_numero = 0;
 		GlobalClass.circuito_tipo = "";
 		GlobalClass.circuito_telegestionado = false;
-
+		
 		GlobalClass.nom_puntoAcceso = "";
-
+		
 		GlobalClass.monitoring = false;
 		GlobalClass.control = "";
 		GlobalClass.rele_1 = "NO_CONECTA";
@@ -560,29 +563,29 @@ public class Install_sinapseActivity extends Activity
 		GlobalClass.rele_5 = "NO_CONECTA";
 		GlobalClass.rele_6 = "NO_CONECTA";
 		GlobalClass.rele_7 = "NO_CONECTA";
-
+	
 		GlobalClass.nom_otroDispositivo = "";
-
+		
 		GlobalClass.cuadros.clear();
 		GlobalClass.pcs.clear();
 		GlobalClass.brs.clear();
 		GlobalClass.otros.clear();
-		GlobalClass.circuitos.clear();
+		GlobalClass.circuitos.clear();		
 		GlobalClass.MC_BE.clear();
 		GlobalClass.MC_3P.clear();
 		GlobalClass.BE.clear();
 		GlobalClass.DE.clear();
 	}
-
-
+	
+	
    //------------------------------------------------------------------
    public void SubirJSON()
    {
 	   //Campos----------------------------------------------------
-
+						  		
 	    directorio_archivos = logsDirectory.list();
-
-
+	   
+	   
 	   if(directorio_archivos.length == 0)
 	   {
 		   Toast.makeText(this, "No hay archivos almacenados", Toast.LENGTH_LONG).show();
@@ -594,65 +597,65 @@ public class Install_sinapseActivity extends Activity
 			   if(((directorio_archivos[i].contains("install")) || (directorio_archivos[i].contains("replace")) || (directorio_archivos[i].contains("backup"))) && !(directorio_archivos[i].contains("forzado")))
 			   {
 				   String f = directorio_archivos[i].substring(0, directorio_archivos[i].length()-5);
-
+				   
 				   File archivo_origen = new File(root + "/sinapse/install/"+directorio_archivos[i]);
-
+				   
 				   File nuevo_archivo = new File(root + "/sinapse/install/"+f+"-forzado.json");
-
-				   try
+				  
+				   try 
 				   {
 					   copyFile(archivo_origen, nuevo_archivo);
-				   }
-				   catch (IOException e)
+				   } 
+				   catch (IOException e) 
 				   {
 					   e.printStackTrace();
 				   }
 			   }
-
+			   
 			   if((directorio_archivos[i].contains("logInstall")) && !(directorio_archivos[i].contains("forzado")) )
 			   {
 				   String f = directorio_archivos[i].substring(0, directorio_archivos[i].length()-4);
-
+				   
 				   File archivo_origen = new File(root + "/sinapse/install/"+directorio_archivos[i]);
-
+				   
 				   File nuevo_archivo = new File(root + "/sinapse/install/"+f+"-forzado.txt");
-				   try
+				   try 
 				   {
 					   copyFile(archivo_origen, nuevo_archivo);
-				   }
-				   catch (IOException e)
+				   } 
+				   catch (IOException e) 
 				   {
 					   e.printStackTrace();
 				   }
 			   }
-
+			   
 			   if(((directorio_archivos[i].contains("Mapa"))) && !(directorio_archivos[i].contains("forzado")))
 			   {
 				   String f = directorio_archivos[i].substring(0, directorio_archivos[i].length()-4);
-
+				   
 				   File archivo_origen = new File(root + "/sinapse/install/"+directorio_archivos[i]);
-
+				   
 				   File nuevo_archivo = new File(root + "/sinapse/install/"+f+"-forzado.kml");
-				   try
+				   try 
 				   {
 					   copyFile(archivo_origen, nuevo_archivo);
-				   }
-				   catch (IOException e)
+				   } 
+				   catch (IOException e) 
 				   {
 					   e.printStackTrace();
 				   }
 			   }
-
-
-
-
+			   
+			
+			   
+			   
 		   }
 	   }
 	   directorio_archivos = logsDirectory.list();
-
-
+	   
+	   
 	   Subir();
-
+	  
 		//-----------------------------------------------------------
    }
    public void Subir()
@@ -662,60 +665,60 @@ public class Install_sinapseActivity extends Activity
    private class Subir extends AsyncTask<String, Float, Integer>
    {
 
-		protected void onPreExecute()
+		protected void onPreExecute() 
 		{
 			archivos_subidos = true;
 			Toast.makeText(Install_sinapseActivity.this, "Subiendo archivos...", Toast.LENGTH_SHORT).show();
 		}
 
-		protected Integer doInBackground(String... urls)
+		protected Integer doInBackground(String... urls) 
 		{
-
-			try
+			
+			try 
 			{
-				FTPClient ftpClient = new FTPClient();
+				FTPClient ftpClient = new FTPClient();   
 				ftpClient.connect(InetAddress.getByName("89.248.100.11"), 21);
 		        ftpClient.login("trazabilidad", "napse1si");
 		        ftpClient.makeDirectory("/Instalacion-"+GlobalClass.global_localiz+"/FORZADOS");
 		        ftpClient.enterLocalPassiveMode();
 		        ftpClient.changeWorkingDirectory("/Instalacion-"+GlobalClass.global_localiz+"/FORZADOS");
 		        Log.i("Estado", "Conectado al servidor FTP");
-
+		        
 		        BufferedInputStream buffIn=null;
-		        //Aqui envï¿½o los archivos creados
+		        //Aqui envío los archivos creados
 		 	    for(int i = 0; i < directorio_archivos.length; ++i)
 		 	    {
 		 		   if(directorio_archivos[i].contains("forzado"))
 		 		   {
 		 			   File archivo = new File(root + "/sinapse/install/"+directorio_archivos[i]);
-		 			   try
+		 			   try 
 		 			   {
 		 				   buffIn=new BufferedInputStream(new FileInputStream(archivo));
 		 			       ftpClient.enterLocalPassiveMode();
 		 			       ftpClient.storeFile(archivo.getName().toString(), buffIn);
 		 			       Log.i("Estado","Subiendo archivo"+archivo.getName().toString());
 		 			       buffIn.close();
-
-		 			   }
-		 			   catch (SocketException e)
+		 					
+		 			   } 
+		 			   catch (SocketException e) 
 		 			   {
 		 				   // TODO Auto-generated catch block
 		 				   e.printStackTrace();
 		 				   archivos_subidos = false;
-		 			   }
-		 			   catch (UnknownHostException e)
+		 			   } 
+		 			   catch (UnknownHostException e) 
+		 			   {
+		 				   // TODO Auto-generated catch block
+		 				   e.printStackTrace();
+		 				  archivos_subidos = false;
+		 			   } 
+		 			   catch (IOException e) 
 		 			   {
 		 				   // TODO Auto-generated catch block
 		 				   e.printStackTrace();
 		 				  archivos_subidos = false;
 		 			   }
-		 			   catch (IOException e)
-		 			   {
-		 				   // TODO Auto-generated catch block
-		 				   e.printStackTrace();
-		 				  archivos_subidos = false;
-		 			   }
-
+		 			   
 		 			   if(archivos_subidos == true)
 		 			   {
 		 				   Log.i("Estado","Archivo"+archivo.getName().toString()+" subido correctamente");
@@ -724,19 +727,19 @@ public class Install_sinapseActivity extends Activity
 		 			   {
 		 				  Log.w("Estado","Archivo"+archivo.getName().toString()+" no se ha subido");
 		 			   }
-
+		 			   
 		 			   archivo.delete();
 		 		   }
-
+		  
 		 	    }
-
-
-
+		        
+		        
+		        
 				ftpClient.logout();
 				ftpClient.disconnect();
-
-			}
-			catch (Exception e)
+				
+			} 
+			catch (Exception e) 
 			{
 				Log.e("Error","No se ha podido subir los ficheros");
 				archivos_subidos = false;
@@ -745,9 +748,9 @@ public class Install_sinapseActivity extends Activity
 
 			return null;
 		}
+		
 
-
-		protected void onPostExecute(Integer bytes)
+		protected void onPostExecute(Integer bytes) 
 		{
 			if(archivos_subidos == true)
 			{
@@ -755,62 +758,62 @@ public class Install_sinapseActivity extends Activity
 			}
 			else
 			{
-				Toast.makeText(Install_sinapseActivity.this, "Error al subir uno o mï¿½s archivos", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Install_sinapseActivity.this, "Error al subir uno o más archivos", Toast.LENGTH_SHORT).show();
 			}
 		}
-
+		
 	}
-
+   
    //Metodo para copiar el contenido de un fichero a otro
    @SuppressWarnings("resource")
-   public static void copyFile(File sourceFile, File destFile) throws IOException
+   public static void copyFile(File sourceFile, File destFile) throws IOException 
    {
-	    if(!destFile.exists())
+	    if(!destFile.exists()) 
 	    {
 	        destFile.createNewFile();
 	    }
-
+	 
 	    FileChannel origen = null;
 	    FileChannel destino = null;
-	    try
+	    try 
 	    {
 	        origen = new FileInputStream(sourceFile).getChannel();
 	        destino = new FileOutputStream(destFile).getChannel();
-
+	 
 	        long count = 0;
-	        long size = origen.size();
+	        long size = origen.size();              
 	        while((count += destino.transferFrom(origen, count, size-count))<size);
 	    }
-	    finally
+	    finally 
 	    {
-	        if(origen != null)
+	        if(origen != null) 
 	        {
 	            origen.close();
 	        }
-	        if(destino != null)
+	        if(destino != null) 
 	        {
 	            destino.close();
 	        }
 	    }
 	}
-
+   
    public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		switch(keyCode)
 		{
 			case KeyEvent.KEYCODE_BACK:
-				lanzarAvisoSalir();
+				lanzarAvisoSalir();	
 			return true;
-
+			
 		}
 		return false;
 	}
    public void lanzarAvisoSalir()
 	{
 		/*AlertDialog.Builder popup = new AlertDialog.Builder(this);
-		popup.setTitle("Salir de la aplicaciï¿½n");
-		popup.setMessage("ï¿½Estas seguro que deseas realizar esta acciï¿½n?");
-		popup.setPositiveButton("Sï¿½", new DialogInterface.OnClickListener() 
+		popup.setTitle("Salir de la aplicación");
+		popup.setMessage("¿Estas seguro que deseas realizar esta acción?");
+		popup.setPositiveButton("Sí", new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int id)
 			{
@@ -823,7 +826,7 @@ public class Install_sinapseActivity extends Activity
 		popup.setNegativeButton("No", null);
 		popup.show();*/
 	}
-
+   
  //funcion que recupera el numero de dispositivos del caso, punto, en las instalaciones realizadas.
    	public int idPunto() throws UnsupportedEncodingException, FileNotFoundException
    	{
@@ -850,10 +853,10 @@ public class Install_sinapseActivity extends Activity
    				}
    			}
    		}
-
+   				
    		return id;
    	}
-
+   	
   //funcion que recupera el numero de dispositivos del caso, cuadro, en las instalaciones realizadas.
    	public int idCuadro() throws UnsupportedEncodingException, FileNotFoundException
    	{
@@ -880,10 +883,10 @@ public class Install_sinapseActivity extends Activity
    				}
    			}
    		}
-
+   				
    		return id;
    	}
-
+   	
   //funcion que recupera el numero de dispositivos del caso, puntos de acceso, en las instalaciones realizadas.
    	public int idPA() throws UnsupportedEncodingException, FileNotFoundException
    	{
@@ -910,10 +913,10 @@ public class Install_sinapseActivity extends Activity
    				}
    			}
    		}
-
+   				
    		return id;
    	}
-
+   	
     //funcion que recupera el numero de dispositivos del caso, otros dispositivos, en las instalaciones realizadas.
    	public int idOtro() throws UnsupportedEncodingException, FileNotFoundException
    	{
@@ -940,38 +943,38 @@ public class Install_sinapseActivity extends Activity
    				}
    			}
    		}
-
+   				
    		return id;
    	}
-
+   	
 	public String NombreInstalacion(String archivo) throws IOException
 	{
 		String cadena = "";
 		String aux;
 	     FileReader f;
 		 f = new FileReader(archivo);
-
+		
 	     BufferedReader b = new BufferedReader(f);
 	     while((aux = b.readLine())!=null) {
 	           cadena = aux;
 	     }
-
+	        
 	     b.close();
-
+	        
 	    return cadena;
 	}
-
+   
 }
 
-class GlobalClass extends Application
-{
+class GlobalClass extends Application 
+{	
 	static int global_tipo;
 	static String global_localiz = "";
 	static String global_fichero = "";
 	static String global_fichero_R = "";
 	static String global_fichero_L = "";
 	static String global_fichero_B = "";
-
+	
 	static String global_EC = "";
 	static String global_MC = "";
 	static String global_BE = "";
@@ -984,7 +987,7 @@ class GlobalClass extends Application
 	static String global_PC = "";
 	static String global_BR = "";
 	static String global_Otro = "";
-
+	
 	static Boolean global_buscaEC = false;
 	static Boolean global_buscaCMC = false;
 	static Boolean global_buscaPA = false;
@@ -995,25 +998,25 @@ class GlobalClass extends Application
 	static String global_RadioNueva = "";
 	static int idradioantigua = 0;
 	static int idradionueva = 0;
-
+	
 	static String FicheroKML = "Mapa Sinapse Instalaciones";
 	static String CabeceraKML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<kml xmlns=\"http://www.opengis.net/kml/2.2\" xmlns:gx=\"http://www.google.com/kml/ext/2.2\" xmlns:kml=\"http://www.opengis.net/kml/2.2\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n<Document>\n	<name>Android.kmz</name>\n	<open>1</open>\n	<Style id=\"sn_placemark_square\">\n		<IconStyle>\n			<color>ff0000ff</color>\n			<scale>1.2</scale>\n			<Icon>\n				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>\n			</Icon>\n		</IconStyle>\n	</Style>\n	<StyleMap id=\"msn_placemark_circle\">\n		<Pair>\n			<key>normal</key>\n			<styleUrl>#sn_placemark_circle</styleUrl>\n		</Pair>\n		<Pair>\n			<key>highlight</key>\n			<styleUrl>#sh_placemark_circle_highlight</styleUrl>\n		</Pair>\n	</StyleMap>\n	<Style id=\"sn_placemark_circle\">\n		<IconStyle>\n			<color>ff0000ff</color>\n			<scale>1.2</scale>\n			<Icon>\n				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href>\n			</Icon>\n		</IconStyle>\n		<ListStyle>\n		</ListStyle>\n	</Style>\n	<Style id=\"sh_placemark_circle_highlight\">\n		<IconStyle>\n			<color>ff0000ff</color>\n			<scale>1.2</scale>\n			<Icon>\n				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle_highlight.png</href>\n			</Icon>\n		</IconStyle>\n		<ListStyle>\n		</ListStyle>\n	</Style>\n	<StyleMap id=\"msn_placemark_square\">\n		<Pair>\n			<key>normal</key>\n			<styleUrl>#sn_placemark_square</styleUrl>\n		</Pair>\n		<Pair>\n			<key>highlight</key>			<styleUrl>#sh_placemark_square_highlight</styleUrl>\n		</Pair>\n	</StyleMap>\n	<Style id=\"sh_placemark_square_highlight\">\n		<IconStyle>\n			<color>ff0000ff</color>\n			<scale>1.2</scale>\n			<Icon>\n				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>\n			</Icon>\n		</IconStyle>\n	</Style>\n		<Folder>\n		<name>" + ((new SimpleDateFormat("yyyy-M-d")).format(new Date()))
 			.toString() + "</name>\n <open>1</open>\n		</Folder>\n</Document>\n</kml>\n";
-
+	
 	static boolean coordmapa = false; // Usada para saber cuando las coordenadas
 	// se extraen del mapa de google maps
 	static double longitud = 0.00000000;
 	static double latitud = 0.00000000;
 	static String address = "";
-
-
+	
+	
 	//variables Dispositivos valores comunes
 	static String nombre_punto = "";
 	static double alturaDisp = 0;
 	static String id_node = "";
 	static String id_cuadro = "";
 	static boolean medida = false;
-
+	
 	//variables Dispositivo punto
 	static String tipo_punto = "";
 	static String tipo_puntoAux = "";
@@ -1031,7 +1034,7 @@ class GlobalClass extends Application
 	static String tipo_balasto2 = "";
 	static int balasto2_perdida = 0;
 	static String lumBalast = "";
-
+		
 	//variables Dispositivo Cuadro
 	static boolean monitoring = false;
 	static String control = "";
@@ -1042,7 +1045,7 @@ class GlobalClass extends Application
 	static String rele_5 = "NO_CONECTA";
 	static String rele_6 = "NO_CONECTA";
 	static String rele_7 = "NO_CONECTA";
-
+	
 	//variables Dispositivo Punto acceso
 	static int id_puntoAcceso = 0;
 	static String nom_puntoAcceso = "";
@@ -1055,11 +1058,11 @@ class GlobalClass extends Application
 	static String puerto21 = null;
 	static String puerto22 = null;
 	static String dirfisica = null;
-
+	
 	//variables Otro dispositivo
 	static int id_otroDispositivo = 0;
 	static String nom_otroDispositivo = "";
-
+	
 	//variables Punto_Fisico_Luminaria
 	static int punto_luz_id=0;
 	static String punto_luz_nombre = "";
@@ -1076,7 +1079,7 @@ class GlobalClass extends Application
 	static String fuente_luz_modelo = "";
 	static int fuente_luz_potencia;
 	static String punto_fecha_toma_datos = null;
-
+	
 	//variables Punto_Fisico_Cuadro
 	static int cuadro_id = 0;
 	static String cuadro_nombre = "";
@@ -1098,9 +1101,9 @@ class GlobalClass extends Application
 	static boolean circuito_telegestionado = false;
 	static String circuito_tipo_conductor = null;
 	static String circuito_seccion_conductor = null;
-	static String circuito_tipo_canalizacion = null;
+	static String circuito_tipo_canalizacion = null;	
 	static ArrayList<String> tipo_rele = new ArrayList<String>();
-
+	
 	static ArrayList<OtroDispositivo> otros = new ArrayList<OtroDispositivo>();
 	static ArrayList<Remplazo> bajas = new ArrayList<Remplazo>();
 	static ArrayList<Circuito> circuitos = new ArrayList<Circuito>();

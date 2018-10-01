@@ -1,0 +1,14 @@
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <ListPreference 
+   android:key="GPS" 
+   android:title="Precisión señal GPS" 
+   android:entries="@array/CalidadGPS"
+   android:entryValues="@array/CalidadGPS"
+   android:defaultValue="ALTA"/> 
+
+    
+    
+</PreferenceScreen>
+

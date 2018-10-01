@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+   
+    <LinearLayout 
+        android:id="@+id/menu_punto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_marginTop="15px" >
+        
+       
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punto Fisico Luminaria"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+        <View
+			android:layout_width="fill_parent"
+			android:layout_height="2dp"
+			android:background="@android:color/black"/>
+       <LinearLayout
+     	 android:layout_width="fill_parent"
+     	 android:orientation="vertical"
+     	 android:layout_height="fill_parent"
+     	 android:layout_marginRight="15px"
+     	 android:layout_marginLeft="15px" >
+		 <TextView
+		      android:id="@+id/punto_luz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punto Luz"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+       
+	    <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+          android:id="@+id/nombre"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"
+         />
+      </LinearLayout>
+        <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textAltura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Altura: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/altura"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="numberDecimal"
+        	/>
+      </LinearLayout>
+       
+        <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textCuadro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cuadro: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/cuadro"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+      </LinearLayout>
+        <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textCircuito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Circuito: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/circuito"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="number"/>
+      </LinearLayout>
+      
+      
+		  <TextView
+        android:id="@+id/textSpinner1"
+        android:layout_marginTop="10px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo soporte: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+       <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>
+     
+      <View
+			android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:background="@android:color/black"/>
+       <TextView
+          	 android:id="@+id/luminaria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luminaria"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+           />
+		  <TextView
+        android:id="@+id/textSpinner2"
+        android:layout_marginTop="10px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>
+       <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textLuminariaMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/luminaria_marca"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+      </LinearLayout>
+        <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent"
+            android:layout_marginBottom="10px">
+		  <TextView
+        android:id="@+id/textLuminariaModelo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modelo: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/luminaria_modelo"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+      </LinearLayout>
+
+        <View
+			android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:background="@android:color/black"/>
+       <TextView
+            android:id="@+id/fuente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fuente luz"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+        
+		  <TextView
+        android:id="@+id/textSpinner3"
+        android:layout_marginTop="10px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tipo: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+        <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>
+    	 
+    	 
+   </LinearLayout>
+
+      <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           	android:layout_marginTop="20px"
+           	    android:layout_marginBottom="15px"
+             >
+
+            <ImageButton
+                android:id="@+id/ButtonAtras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+             
+              android:background="@drawable/transparent"
+                android:src="@drawable/atras2" />
+
+            <ImageButton
+                android:id="@+id/continueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15px"
+              android:background="@drawable/transparent"
+                android:src="@drawable/continuar2" />
+
+         </RelativeLayout>
+   
+     </LinearLayout>
+    
+ </ScrollView> 

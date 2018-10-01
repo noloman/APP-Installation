@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:gravity="center"
+        android:layout_marginTop="15px">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:background="@drawable/transparent"
+            android:src="@drawable/logo" >
+           
+        </ImageView>
+
+   
+    </LinearLayout>
+    
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+       >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30px" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" 
+                android:layout_marginRight="15px">
+		
+                <ImageButton
+                    android:id="@+id/addButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transparent"
+                    android:src="@drawable/easycontrol" />
+			  <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Nueva Instalación"
+                    android:textColor="#000000"
+                    android:textStyle="bold" /> 
+              
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15px" >
+
+                <ImageButton
+                    android:id="@+id/replaceButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transparent"
+                    android:gravity="center"
+                    android:src="@drawable/replace" />
+                
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Reemplazar dispositivo"
+                    android:textColor="#000000" 
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30px" >
+            
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="15px" >
+            
+            <ImageButton
+                android:id="@+id/subirJSON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:gravity="center"
+                android:src="@drawable/archivos" />
+            
+             <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Subir archivos"
+                android:textColor="#000000"
+                android:textStyle="bold" /> 
+            
+            </LinearLayout>
+            
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_marginLeft="15px">
+
+            <ImageButton
+                android:id="@+id/parteTrabajo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:gravity="center"
+                android:src="@drawable/pushpin" />
+            
+                  <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generar Parte Trabajo"
+                android:textColor="#000000" 
+                android:textStyle="bold"/>
+                  
+            </LinearLayout>
+            
+            
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" 
+            android:layout_marginTop="30px">
+            
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            <ImageButton
+                android:id="@+id/verPuntos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:gravity="center"
+                android:src="@drawable/maps" />
+            
+             <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ver puntos en mapa"
+                android:textColor="#000000"
+                android:textStyle="bold" 
+                android:layout_marginBottom="20px"/>
+             
+            </LinearLayout>
+            
+            
+        </TableRow>
+
+        
+    </TableLayout>
+
+</LinearLayout>
+

@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "install.sinapse"
+        minSdkVersion 15
+        targetSdkVersion 21
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation group: 'com.itextpdf', name: 'itextg', version: '5.5.9'
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'commons-net:commons-net:3.0.1'
+    implementation group: 'net.sourceforge.javacsv', name: 'javacsv', version: '2.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    // https://mvnrepository.com/artifact/com.google.zxing/core
+    implementation group: 'com.google.zxing', name: 'core', version: '3.2.0'
+    // https://mvnrepository.com/artifact/com.google.zxing/android-integration
+    implementation group: 'com.google.zxing', name: 'android-integration', version: '3.2.0'
+}

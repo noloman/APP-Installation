@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+     <LinearLayout 
+        android:id="@+id/menu_cuadro"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1" 
+        android:layout_marginTop="15px">
+        
+     
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Punto Fisico Cuadro"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+        <View
+			android:layout_width="fill_parent"
+			android:layout_height="2dp"
+			android:background="@android:color/black"/>
+      <LinearLayout
+      android:layout_width="fill_parent"
+      android:orientation="vertical"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="20px"
+      android:layout_marginLeft="15px"
+      android:layout_marginRight="15px" >
+		 <TextView
+		      android:id="@+id/cuadro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cuadro"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000"
+            android:paddingTop="10px"/>
+     
+		
+     <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+		 <EditText
+         android:id="@+id/nombre"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+	  </LinearLayout>
+      <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textAltura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Altura: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+		 <EditText
+         android:id="@+id/altura"
+         android:inputType="numberDecimal"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"/>
+	  </LinearLayout>
+       <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textSuministro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número suministro: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+           android:id="@+id/num_suministro"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+         android:inputType="textMultiLine"/>
+      </LinearLayout>
+      <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textCuadro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Id del cuadro: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"/>
+      <EditText
+         android:id="@+id/idCuadro"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+          android:inputType="textMultiLine"/>
+      </LinearLayout>
+      
+       <TextView
+        android:id="@+id/textSpinner"
+        android:layout_marginTop="10px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cuadro comando: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Spinner>  
+    
+      <LinearLayout 
+           android:orientation="horizontal"
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent">
+		  <TextView
+        android:id="@+id/textNumCircuitos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número de circuitos: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
+      <EditText
+         android:id="@+id/num_circuitos"
+         android:layout_height="wrap_content"
+         android:layout_width="fill_parent"
+          android:inputType="number"/>
+      </LinearLayout>
+          
+              
+     	</LinearLayout>
+           
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           android:layout_marginBottom="15px"
+             >
+
+            <ImageButton
+                android:id="@+id/ButtonAtras"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+           
+               android:background="@drawable/transparent"
+                android:src="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/continueButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"  
+                android:layout_marginRight="15px"
+               android:background="@drawable/transparent"
+                android:src="@drawable/continuar" />
+
+         </RelativeLayout>
+        
+     </LinearLayout>
+    
+
+</LinearLayout>

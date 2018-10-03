@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+   
+    <LinearLayout 
+        android:id="@+id/menu_instalacion"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1" >
+        
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:gravity="center"
+        android:layout_marginTop="15px">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:background="@drawable/transparent"
+            android:src="@drawable/logo2" >
+           
+        </ImageView>
+
+   	
+    </LinearLayout>
+		
+        
+       <LinearLayout 
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content"> 
+	
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="318dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center" >
+
+         <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30px" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" 
+                android:layout_marginRight="15px">
+		
+                <ImageButton
+                    android:id="@+id/puntoBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transparent"
+                    android:src="@drawable/punto2" />
+	
+                   <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir punto"
+                android:layout_gravity="center"
+                android:textColor="#000000" 
+                android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15px" >
+
+                <ImageButton
+                    android:id="@+id/cuadroBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/transparent"
+                    android:gravity="center"
+                    android:src="@drawable/cuadro2" />
+                     <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir cuadro"
+                  android:layout_gravity="center"
+                android:textColor="#000000" 
+                android:textStyle="bold"/>
+             
+            </LinearLayout>
+        </TableRow>
+         <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30px" >
+            
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="15px" >
+            
+            <ImageButton
+                android:id="@+id/punto_accesoBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:gravity="center"
+                android:src="@drawable/puntoacceso2" />
+                 <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir punto acceso"
+                  android:layout_gravity="center"
+                android:textColor="#000000" 
+                android:textStyle="bold"/>
+              
+            </LinearLayout>
+            
+          <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_marginLeft="15px">
+
+            <ImageButton
+                android:id="@+id/otroBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:gravity="center"
+                android:src="@drawable/otro2" />
+                 <TextView
+                android:id="@+id/TextView04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Añadir otro dispositivo"
+                  android:layout_gravity="center"
+                android:textColor="#000000" 
+                android:textStyle="bold"/>
+            </LinearLayout>
+        </TableRow>
+       </TableLayout>
+              </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:gravity="bottom" >
+
+		<!--  	<LinearLayout
+			       android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:orientation="vertical"
+            		android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                          android:layout_marginLeft="30px"
+            		>
+
+            <ImageButton
+                android:id="@+id/cancelarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+          
+                android:background="@drawable/transparent"
+                android:src="@drawable/cancelar2" />
+
+         	<TextView 
+			         android:id="@+id/TextViewCan"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:text="Cancelar"
+			         android:layout_gravity="center"
+			         android:textColor="#000000"
+			         android:textStyle="bold" 
+			        />
+			</LinearLayout>-->
+			<LinearLayout
+			       android:layout_width="wrap_content"
+            		android:layout_height="wrap_content"
+            		android:orientation="vertical"
+            	    android:layout_alignParentBottom="true"
+               	    android:layout_centerInParent="true"
+               	    android:layout_marginLeft="30px"
+               	     android:gravity="center"
+            		>
+
+            <ImageButton
+                android:id="@+id/finalizarBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               
+                android:background="@drawable/transparent"
+                android:src="@drawable/guardarsalir" />
+
+            <TextView 
+			         android:id="@+id/TextViewFin"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:text="Guardar y salir"
+			         android:layout_gravity="center"
+			         android:textColor="#000000" 
+			         android:textStyle="bold"
+			        />
+            
+		</LinearLayout>
+	</RelativeLayout>
+     </LinearLayout>
+    
+ </LinearLayout> 

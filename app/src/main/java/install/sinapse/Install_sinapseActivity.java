@@ -670,7 +670,6 @@ public class Install_sinapseActivity extends Activity
 
 		protected Integer doInBackground(String... urls)
 		{
-
 			try
 			{
 				FTPClient ftpClient = new FTPClient();

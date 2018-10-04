@@ -1,5 +1,6 @@
 package install.sinapse;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Address;
@@ -25,6 +27,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -59,6 +64,10 @@ import java.util.TimeZone;
 // SE COMENTA GETADRESS Y alertaGPS para que al no tener red el movil no se lie
 
 public class Gps_activity<GPSActivity> extends Activity implements LocationListener {
+    private static final int LOCATION_PERMISSION = 0x02;
+    private static final int SINGLE_UPDATE_LOCATION_PERMISSION = 0x03;
+    private static final int SINGLE_AND_UPDATES_LOCATION_PERMISSION = 0x04;
+    private static final int MOSTRAR_LOG_PERMISSION = 0x05;
     private LocationManager locationManager;
     private String provider;
     //Coordenadas
@@ -193,8 +202,20 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         //				PendingIntent.FLAG_UPDATE_CURRENT);
         //		locationManager.requestSingleUpdate(c, singleUpatePI);
 
-        Location location = locationManager.getLastKnownLocation(provider);
-        locationManager.requestSingleUpdate(provider, this, getMainLooper());
+        Location location = null;
+        if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(Gps_activity.this,
+                    new String[]{android.Manifest.permission.READ_PHONE_STATE},
+                    LOCATION_PERMISSION);
+            // ACCESS_FINE_LOCATION is an app-defined int constant. The callback method gets the result of the request.
+        } else {
+            // Permission has already been granted
+            location = locationManager.getLastKnownLocation(provider);
+            locationManager.requestSingleUpdate(provider, this, getMainLooper());
+        }
 
         //Si tengo la misma posicion que antes o no tengo posicion directamente, habilito la posibilidad
         //de a�adir el punto con el mapa
@@ -223,21 +244,24 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             // ((ImageButton)
             // this.findViewById(R.id.scanButton)).setVisibility(0);
 
-
-            mostrarLog(location);
-
-
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                    Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Gps_activity.this,
+                        new String[]{Manifest.permission.READ_PHONE_STATE},
+                        Install_sinapseActivity.READ_PHONE_STATE_PERMISSION);
+            } else {
+                mostrarLog();
+            }
         } else {
             if (GlobalClass.coordmapa == false) {
                 locationText.setText("Provider not available");
                 alertaGPS();
-
                 //((ImageButton) this.findViewById(R.id.mapButton))
                 //	.setEnabled(false);
             }
-
         }
-
 
         if (GlobalClass.coordmapa == false) {
             locationManager.requestLocationUpdates(provider, 400, 1, this);
@@ -286,8 +310,19 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
                 }
 
                 PendingIntent singleUpatePI = PendingIntent.getBroadcast(getBaseContext(), 0, getIntent(), PendingIntent.FLAG_UPDATE_CURRENT);
-                locationManager.requestSingleUpdate(c, singleUpatePI);
-
+                if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(Gps_activity.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            SINGLE_UPDATE_LOCATION_PERMISSION);
+                    // ACCESS_FINE_LOCATION is an app-defined int constant. The callback method gets the result of the request.
+                } else {
+                    // Permission has already been granted
+                    // TODO Pass c
+                    locationManager.requestSingleUpdate(c, singleUpatePI);
+                }
 
                 if (GlobalClass.latitud == 0.00000000) {
                     alertaGPS();
@@ -382,11 +417,11 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         return false;
     }
 
-    @SuppressWarnings({"null", "resource"})
-    private void mostrarLog(Location loc) {
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    private void mostrarLog() {
         List<String> locationProvider = locationManager.getAllProviders();
         GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
-        calendar.setTimeInMillis(loc.getTime());
+        calendar.setTimeInMillis(currentLocation.getTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY);
         String fecha_dia = sdf.format(calendar.getTime()).substring(0, 10);
         String srvcName = Context.TELEPHONY_SERVICE;
@@ -398,7 +433,6 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         SensorManager sensores = (SensorManager) getSystemService(SENSOR_SERVICE);
         List<Sensor> lista_sensores = sensores.getSensorList(Sensor.TYPE_ALL);
         String escaneo = null;
-
 
         Log.v("Datos Telefono", "----");
         Log.i("IMEI", deviceId);
@@ -463,12 +497,12 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         Log.v("Datos Coordenadas GPS", "----");
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(Gps_activity.this);
         String precision = pref.getString("GPS", "ALTA");
-        Log.i("Latitud", loc.getLatitude() + "");
-        Log.i("Longitud", loc.getLongitude() + "");
-        Log.i("Precisi�n", precision + "-" + loc.getAccuracy() + "");
-        Log.i("Altitud", loc.getAltitude() + "");
-        Log.i("Orientaci�n", loc.getBearing() + "");
-        Log.i("Velocidad", loc.getSpeed() + "");
+        Log.i("Latitud", currentLatitude + "");
+        Log.i("Longitud", currentLongitude + "");
+        Log.i("Precisi�n", precision + "-" + currentLocation.getAccuracy() + "");
+        Log.i("Altitud", currentLocation.getAltitude() + "");
+        Log.i("Orientaci�n", currentLocation.getBearing() + "");
+        Log.i("Velocidad", currentLocation.getSpeed() + "");
         Log.i("Fecha y Hora", sdf.format(calendar.getTime()));
         Log.i("Dia", fecha_dia);
         Log.v("--------", "----------");
@@ -552,8 +586,19 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             ((ImageButton) this.findViewById(R.id.mapButton)).setEnabled(true);
 
         } else {
-            locationManager.requestSingleUpdate(provider, this, getMainLooper());
-            locationManager.requestLocationUpdates(provider, 400, 1, this);
+            if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // Permission is not granted
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(Gps_activity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        SINGLE_AND_UPDATES_LOCATION_PERMISSION);
+                // ACCESS_FINE_LOCATION is an app-defined int constant. The callback method gets the result of the request.
+            } else {
+                // Permission has already been granted
+                locationManager.requestSingleUpdate(provider, this, getMainLooper());
+                locationManager.requestLocationUpdates(provider, 400, 1, this);
+            }
             //	getaddress();
             GlobalClass.address = myaddress.getText().toString();
 
@@ -599,16 +644,34 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             //	getaddress();
             ((ImageButton) this.findViewById(R.id.scanButton)).setEnabled(true);
 
-            mostrarLog(location);
-
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                    Manifest.permission.READ_PHONE_STATE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Gps_activity.this,
+                        new String[]{Manifest.permission.READ_PHONE_STATE},
+                        MOSTRAR_LOG_PERMISSION);
+            } else {
+                // Permission has already been granted
+                mostrarLog();
+            }
         }
-
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        locationManager.requestSingleUpdate(provider, this, getMainLooper());
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
+        if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(Gps_activity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    SINGLE_AND_UPDATES_LOCATION_PERMISSION);
+        } else {
+            // Permission has already been granted
+            locationManager.requestSingleUpdate(provider, this, getMainLooper());
+            locationManager.requestLocationUpdates(provider, 400, 1, this);
+        }
         //	getaddress();
         GlobalClass.address = myaddress.getText().toString();
     }
@@ -1231,6 +1294,53 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             con.disconnect();
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            case Install_sinapseActivity.READ_PHONE_STATE_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mostrarLog();
+                }
+                return;
+            }
+            case SINGLE_UPDATE_LOCATION_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PendingIntent singleUpatePI = PendingIntent.getBroadcast(getBaseContext(), 0, getIntent(), PendingIntent.FLAG_UPDATE_CURRENT);
+//                locationManager.requestSingleUpdate(c, singleUpatePI);
+                }
+                return;
+            }
+            case SINGLE_AND_UPDATES_LOCATION_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestSingleUpdate(provider, this, getMainLooper());
+                    locationManager.requestLocationUpdates(provider, 400, 1, this);
+                }
+                return;
+            }
+
+            case MOSTRAR_LOG_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request.
         }
     }
 }

@@ -63,7 +63,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Install_sinapseActivity extends Activity {
-    private static final int READ_PHONE_STATE_PERMISSION = 0x01;
+    static final int READ_PHONE_STATE_PERMISSION = 0x01;
     TextView instalacionText;
     boolean flagEarth = false;
     // TextView numptosText;

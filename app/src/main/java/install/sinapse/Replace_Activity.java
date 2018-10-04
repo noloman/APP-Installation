@@ -8,14 +8,12 @@ package install.sinapse;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 
 public class Replace_Activity extends Activity {
@@ -119,17 +117,19 @@ public class Replace_Activity extends Activity {
     }
 
     void qrscan() {
-//		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-//		intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-//		startActivityForResult(intent, 0);
-
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.initiateScan();
+        try {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);
+        } catch (Exception e) {
+            Uri marketUri = Uri.parse("market://details?id=com.google.zxing.client.android");
+            Intent marketIntent = new Intent(Intent.ACTION_VIEW, marketUri);
+            startActivity(marketIntent);
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
             String contents = intent.getStringExtra("SCAN_RESULT");
             String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 

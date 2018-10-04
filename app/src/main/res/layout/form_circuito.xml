@@ -102,7 +102,7 @@
                 android:layout_alignParentLeft="true"
                
                     android:background="@drawable/transparent"
-                android:src="@drawable/atras2" />
+                android:src="@drawable/atras_alineado" />
 
             <ImageButton
                 android:id="@+id/continueButton"
@@ -113,7 +113,7 @@
                
                 android:layout_marginRight="15px"
                   android:background="@drawable/transparent"
-                android:src="@drawable/continuar2" />
+                android:src="@drawable/continuar_solo_simbolo" />
 
          </RelativeLayout>
         

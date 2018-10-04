@@ -1,79 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-     <LinearLayout 
+    <LinearLayout
         android:id="@+id/menu_puntoAcceso"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginTop="15px"
         android:background="@color/white"
         android:orientation="vertical"
-        android:weightSum="1"
-        android:layout_marginTop="15px" >
-       
+        android:weightSum="1">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10px"
             android:text="Datos del punto acceso"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#000000"
-            android:paddingTop="10px"
-            android:gravity="center"/>
+            android:textColor="#000000" />
+
         <View
-			android:layout_width="fill_parent"
-			android:layout_height="2dp"
-			android:background="@android:color/black"/>
-    	
-         
-	  
-         <LinearLayout 
-           android:orientation="horizontal"
-           android:layout_height="wrap_content"
-           android:layout_width="fill_parent"
-           android:layout_marginLeft="10px"
-           android:layout_marginRight="10px">
-		  <TextView
-        android:id="@+id/textNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre: "
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#000000" />
-		 <EditText
-         android:id="@+id/nombre"
-         android:layout_height="wrap_content"
-         android:layout_width="fill_parent"
-          android:inputType="textMultiLine"/>
-	  </LinearLayout>
-	  
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/black" />
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre: "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+
         <RelativeLayout
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
-               android:layout_marginTop="20px" 
-                android:layout_marginBottom="15px">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="15px">
 
             <ImageButton
                 android:id="@+id/ButtonAtras"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-             
-                  android:background="@drawable/transparent"
-                android:src="@drawable/atras2" />
+                android:layout_alignParentBottom="true"
+
+                android:background="@drawable/transparent"
+                android:src="@drawable/atras_alineado" />
 
             <ImageButton
                 android:id="@+id/continueButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-              
-                android:layout_marginRight="15px"
-                   android:background="@drawable/transparent"
-                android:src="@drawable/continuar2" />
+                android:layout_alignParentBottom="true"
 
-         </RelativeLayout>
-	</LinearLayout>
+                android:layout_marginRight="15px"
+                android:background="@drawable/transparent"
+                android:src="@drawable/continuar_alineado" />
+
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -438,7 +438,7 @@
                       android:layout_width="42dp"
                       android:layout_height="wrap_content"
                       android:background="@drawable/transparent"
-                      android:src="@drawable/next" />
+                      android:src="@drawable/atras_solo_simbolo" />
                   
                    <TextView 
 			         android:id="@+id/TextViewAtras"
@@ -488,7 +488,7 @@
                            android:layout_height="wrap_content"
                            android:background="@drawable/transparent"
                            android:layout_gravity="center"
-                           android:src="@drawable/next" />
+                           android:src="@drawable/continuar_solo_simbolo" />
                        
                        <TextView 
 			         android:id="@+id/TextViewGuardar"

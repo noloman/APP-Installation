@@ -170,6 +170,33 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Define the criteria how to select the location provider -> use
         // default
+        provider = getBestProvider();
+
+        // Now that we have a location manager, its a simple process to check to
+        // see if the GPS is enabled or not:
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            createGpsDisabledAlert();
+        }
+        // Intento de actualizar posicion
+        //		PendingIntent singleUpatePI = PendingIntent.getBroadcast(
+        //				getBaseContext(), 0, getIntent(),
+        //				PendingIntent.FLAG_UPDATE_CURRENT);
+        //		locationManager.requestSingleUpdate(c, singleUpatePI);
+
+        Location location = null;
+        if (ContextCompat.checkSelfPermission(Gps_activity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            // No explanation needed, we can request the permission.
+            ActivityCompat.requestPermissions(Gps_activity.this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION);
+        } else {
+            locationAcquired();
+        }
+    }
+
+    private String getBestProvider() {
         Criteria c = new Criteria();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(Gps_activity.this);
         String s = pref.getString("GPS", "ALTA");
@@ -189,33 +216,13 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         c.setCostAllowed(true);
         c.setPowerRequirement(Criteria.POWER_MEDIUM);
 
-        provider = locationManager.getBestProvider(c, false);
+        return locationManager.getBestProvider(c, false);
+    }
 
-        // Now that we have a location manager, its a simple process to check to
-        // see if the GPS is enabled or not:
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            createGpsDisabledAlert();
-        }
-        // Intento de actualizar posicion
-        //		PendingIntent singleUpatePI = PendingIntent.getBroadcast(
-        //				getBaseContext(), 0, getIntent(),
-        //				PendingIntent.FLAG_UPDATE_CURRENT);
-        //		locationManager.requestSingleUpdate(c, singleUpatePI);
-
-        Location location = null;
-        if (ContextCompat.checkSelfPermission(Gps_activity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(Gps_activity.this,
-                    new String[]{android.Manifest.permission.READ_PHONE_STATE},
-                    LOCATION_PERMISSION);
-            // ACCESS_FINE_LOCATION is an app-defined int constant. The callback method gets the result of the request.
-        } else {
-            // Permission has already been granted
-            location = locationManager.getLastKnownLocation(provider);
-            locationManager.requestSingleUpdate(provider, this, getMainLooper());
-        }
+    private void locationAcquired() {
+        Location location;// Permission has already been granted
+        location = locationManager.getLastKnownLocation(provider);
+        locationManager.requestSingleUpdate(provider, this, getMainLooper());
 
         //Si tengo la misma posicion que antes o no tengo posicion directamente, habilito la posibilidad
         //de a�adir el punto con el mapa
@@ -598,12 +605,12 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
                 // Permission has already been granted
                 locationManager.requestSingleUpdate(provider, this, getMainLooper());
                 locationManager.requestLocationUpdates(provider, 400, 1, this);
-            }
-            //	getaddress();
-            GlobalClass.address = myaddress.getText().toString();
+                //	getaddress();
+                GlobalClass.address = myaddress.getText().toString();
 
-            if (GlobalClass.latitud != 0.0000) {
-                ((ImageButton) this.findViewById(R.id.scanButton)).setEnabled(true);
+                if (GlobalClass.latitud != 0.0000) {
+                    ((ImageButton) this.findViewById(R.id.scanButton)).setEnabled(true);
+                }
             }
         }
 
@@ -1304,11 +1311,8 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             case LOCATION_PERMISSION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    provider = getBestProvider();
+                    locationAcquired();
                 }
                 return;
             }
@@ -1327,8 +1331,15 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
             }
             case SINGLE_AND_UPDATES_LOCATION_PERMISSION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    provider = getBestProvider();
                     locationManager.requestSingleUpdate(provider, this, getMainLooper());
                     locationManager.requestLocationUpdates(provider, 400, 1, this);
+                    //	getaddress();
+                    GlobalClass.address = myaddress.getText().toString();
+
+                    if (GlobalClass.latitud != 0.0000) {
+                        ((ImageButton) this.findViewById(R.id.scanButton)).setEnabled(true);
+                    }
                 }
                 return;
             }

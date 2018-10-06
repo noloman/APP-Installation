@@ -49,7 +49,6 @@ public class MapsActivity extends FragmentActivity {
     GoogleMap mapa;
     //LocationClient mlocation;
     Location location = null;
-    private LocationManager locationManager;
     @SuppressWarnings("unused")
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     MarkerOptions mp = new MarkerOptions();

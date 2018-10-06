@@ -579,7 +579,7 @@ public class Install_sinapseActivity extends Activity {
         directorio_archivos = logsDirectory.list();
 
 
-        if (directorio_archivos.length == 0) {
+        if (directorio_archivos != null && directorio_archivos.length == 0) {
             Toast.makeText(this, "No hay archivos almacenados", Toast.LENGTH_LONG).show();
         } else {
             for (int i = 0; i < directorio_archivos.length; ++i) {
@@ -777,7 +777,7 @@ public class Install_sinapseActivity extends Activity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         directorio_archivos = logsDirectory.list();
 
-        if (directorio_archivos.length > 0) {
+        if (directorio_archivos != null && directorio_archivos.length > 0) {
             for (int i = 0; i < directorio_archivos.length; i++) {
                 if (directorio_archivos[i].contains("install-" + GlobalClass.global_localiz) && !(directorio_archivos[i].contains("forzado"))) {
                     reader = new JsonReader(new InputStreamReader(new FileInputStream(logsDirectory + "/" + directorio_archivos[i]), "UTF-8"));
@@ -803,7 +803,7 @@ public class Install_sinapseActivity extends Activity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         directorio_archivos = logsDirectory.list();
 
-        if (directorio_archivos.length > 0) {
+        if (directorio_archivos != null && directorio_archivos.length > 0) {
             for (int i = 0; i < directorio_archivos.length; i++) {
                 if (directorio_archivos[i].contains("install-" + GlobalClass.global_localiz) && !(directorio_archivos[i].contains("forzado"))) {
                     reader = new JsonReader(new InputStreamReader(new FileInputStream(logsDirectory + "/" + directorio_archivos[i]), "UTF-8"));
@@ -829,7 +829,7 @@ public class Install_sinapseActivity extends Activity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         directorio_archivos = logsDirectory.list();
 
-        if (directorio_archivos.length > 0) {
+        if (directorio_archivos != null && directorio_archivos.length > 0) {
             for (int i = 0; i < directorio_archivos.length; i++) {
                 if (directorio_archivos[i].contains("install-" + GlobalClass.global_localiz) && !(directorio_archivos[i].contains("forzado"))) {
                     reader = new JsonReader(new InputStreamReader(new FileInputStream(logsDirectory + "/" + directorio_archivos[i]), "UTF-8"));
@@ -855,7 +855,7 @@ public class Install_sinapseActivity extends Activity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         directorio_archivos = logsDirectory.list();
 
-        if (directorio_archivos.length > 0) {
+        if (directorio_archivos != null && directorio_archivos.length > 0) {
             for (int i = 0; i < directorio_archivos.length; i++) {
                 if (directorio_archivos[i].contains("install-" + GlobalClass.global_localiz) && !(directorio_archivos[i].contains("forzado"))) {
                     reader = new JsonReader(new InputStreamReader(new FileInputStream(logsDirectory + "/" + directorio_archivos[i]), "UTF-8"));

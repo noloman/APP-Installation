@@ -6,6 +6,7 @@
 
 package install.sinapse;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -22,6 +23,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -64,6 +67,9 @@ import java.util.Locale;
 
 public class Install_sinapseActivity extends Activity {
     static final int READ_PHONE_STATE_PERMISSION = 0x01;
+    private static final int CALL_PHONE_PERMISSION = 0x02;
+    private static final int WRITE_EXTERNAL_STORAGE_PERMISSION = 0x03;
+    private static final int READ_PHONE_STATE_AND_CHECK_IMEI_PERMISSION = 0x04;
     TextView instalacionText;
     boolean flagEarth = false;
     // TextView numptosText;
@@ -99,7 +105,7 @@ public class Install_sinapseActivity extends Activity {
         kml = (ImageButton) findViewById(R.id.verPuntos);
 
         try {
-            GlobalClass.global_localiz = NombreInstalacion(root + "/sinapse/install/IdInstall.txt");
+            GlobalClass.global_localiz = nombreInstalacion(root + "/sinapse/install/IdInstall.txt");
         } catch (IOException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -153,10 +159,6 @@ public class Install_sinapseActivity extends Activity {
 
             @Override
             public void onClick(View arg0) {
-
-                String fecha = ((new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).format(new Date())).toString()); //Recojo la fecha de hoy
-                String srvcName = Context.TELEPHONY_SERVICE;
-                TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
                 // Here, thisActivity is the current activity
                 if (ContextCompat.checkSelfPermission(Install_sinapseActivity.this,
                         android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -165,33 +167,45 @@ public class Install_sinapseActivity extends Activity {
                     ActivityCompat.requestPermissions(Install_sinapseActivity.this,
                             new String[]{android.Manifest.permission.READ_PHONE_STATE},
                             READ_PHONE_STATE_PERMISSION);
-                    // READ_PHONE_STATE_PERMISSION is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
                 } else {
-                    // Permission has already been granted
-                    deviceId = telephonyManager.getDeviceId();                                                    //Recojo el IMEI
-                    File file = new File(Environment.getExternalStorageDirectory(), "/sinapse/install/Mapa Sinapse Instalaciones-" + deviceId + "-" + fecha + ".kml");
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        //intent.setDataAndType(Uri.fromFile(archivo_kmz), "application/vnd.google-earth.kmz+xml");
-                        Uri uriFromFile =
-                                FileProvider.getUriForFile(Install_sinapseActivity.this,
-                                        GenericFileProvider.class.getName(),
-                                        file);
-                        intent.setDataAndType(uriFromFile, "application/vnd.google-earth.kml+xml");
-                        intent.putExtra("com.google.earth.EXTRA.tour_feature_id", "my_track");
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException e) {
-                        onPause();
-                        flagEarth = true;
-                        showGoogleEarthDialog();
-                    }
+                    viewKlmFileInGoogleEarth();
                 }
             }
         });
+        if ((ContextCompat.checkSelfPermission(Install_sinapseActivity.this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) &&
+                ContextCompat.checkSelfPermission(Install_sinapseActivity.this,
+                        Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Install_sinapseActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE},
+                    WRITE_EXTERNAL_STORAGE_PERMISSION);
+        } else {
+            createFile("Mapa Sinapse Instalaciones", GlobalClass.CabeceraKML);
+        }
+    }
 
-        createFile("Mapa Sinapse Instalaciones", GlobalClass.CabeceraKML);
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    private void viewKlmFileInGoogleEarth() {
+        String fecha = ((new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).format(new Date())).toString()); //Recojo la fecha de hoy
+        String srvcName = Context.TELEPHONY_SERVICE;
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
+        deviceId = telephonyManager.getDeviceId();                                                    //Recojo el IMEI
+        File file = new File(Environment.getExternalStorageDirectory(), "/sinapse/install/Mapa Sinapse Instalaciones-" + deviceId + "-" + fecha + ".kml");
+        Uri uriFromFile =
+                FileProvider.getUriForFile(Install_sinapseActivity.this,
+                        GenericFileProvider.class.getName(),
+                        file);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uriFromFile, "application/vnd.google-earth.kml+xml");
+            intent.putExtra("com.google.earth.EXTRA.tour_feature_id", "my_track");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            onPause();
+            flagEarth = true;
+            showGoogleEarthDialog();
+        }
     }
 
     /* Request updates at startup */
@@ -299,13 +313,8 @@ public class Install_sinapseActivity extends Activity {
             // No explanation needed, we can request the permission.
             ActivityCompat.requestPermissions(Install_sinapseActivity.this,
                     new String[]{android.Manifest.permission.READ_PHONE_STATE},
-                    READ_PHONE_STATE_PERMISSION);
-
-            // READ_PHONE_STATE_PERMISSION is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
+                    READ_PHONE_STATE_AND_CHECK_IMEI_PERMISSION);
         } else {
-            // Permission has already been granted
             deviceId = telephonyManager.getDeviceId();
             int i = 0;
             for (i = 0; i < IMEI.length; ++i) {
@@ -327,7 +336,16 @@ public class Install_sinapseActivity extends Activity {
                 .setPositiveButton("Llamar a Soporte Sinapse",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                llamarSoporteSinapse();
+                                if (ContextCompat.checkSelfPermission(Install_sinapseActivity.this,
+                                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                    // Permission is not granted
+                                    // No explanation needed, we can request the permission.
+                                    ActivityCompat.requestPermissions(Install_sinapseActivity.this,
+                                            new String[]{android.Manifest.permission.CALL_PHONE},
+                                            CALL_PHONE_PERMISSION);
+                                } else {
+                                    callSupportPhone();
+                                }
                             }
                         });
 
@@ -335,81 +353,63 @@ public class Install_sinapseActivity extends Activity {
         alert.show();
     }
 
-    private void llamarSoporteSinapse() {
-        try {
-            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:668879004")));
-            finish();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @RequiresPermission(Manifest.permission.CALL_PHONE)
+    private void callSupportPhone() {
+        startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:668879004")));
         finish();
     }
 
+    @RequiresPermission(allOf = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE})
     public boolean createFile(String nombrefichero, String cabecera) {
         boolean flag = false;
 
         String srvcName = Context.TELEPHONY_SERVICE;
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(srvcName);
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(Install_sinapseActivity.this,
-                android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            // No explanation needed, we can request the permission.
-            ActivityCompat.requestPermissions(Install_sinapseActivity.this,
-                    new String[]{android.Manifest.permission.READ_PHONE_STATE},
-                    READ_PHONE_STATE_PERMISSION);
+        // Permission has already been granted
+        deviceId = telephonyManager.getDeviceId();
+        String fecha = ((new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).format(new Date())).toString());
 
-            // READ_PHONE_STATE_PERMISSION is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
+        if (!isExternalStorageWritable()) {
+            Toast.makeText(this, R.string.TarjetaNoMontada, Toast.LENGTH_LONG).show();
         } else {
-            // Permission has already been granted
-            deviceId = telephonyManager.getDeviceId();
-            String fecha = ((new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).format(new Date())).toString());
+            File nmea_file;
+            File root = Environment.getExternalStorageDirectory();
+            FileWriter nmea_writer = null;
+            try {
+                // create a File object for the parent directory
+                File logsDirectory = new File(root + "/sinapse/install/");
+                // have the object build the directory structure, if needed.
+                logsDirectory.mkdirs();
 
-            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                Toast.makeText(this, R.string.TarjetaNoMontada, Toast.LENGTH_LONG).show();
-            } else {
-                File nmea_file;
-                File root = Environment.getExternalStorageDirectory();
-                FileWriter nmea_writer = null;
-                try {
-                    // create a File object for the parent directory
-                    File logsDirectory = new File(root + "/sinapse/install/");
-                    // have the object build the directory structure, if needed.
-                    logsDirectory.mkdirs();
+                nmea_file = new File(logsDirectory, nombrefichero + "-" + deviceId + "-" + fecha + ".kml");
+                // Almaceno en la cadena fichero la ruta del fichero que
+                // tendremos que subir al FTP
+                //GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + GlobalClass.global_localiz + "-" + deviceId +"-"+fecha+ ".kml";
+                GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + deviceId + "-" + fecha + ".kml";
+                if (!nmea_file.exists()) {
+                    flag = nmea_file.createNewFile();
+                    Toast.makeText(this, R.string.FicheroKMLNoExiste, Toast.LENGTH_LONG).show();
 
-                    nmea_file = new File(logsDirectory, nombrefichero + "-" + deviceId + "-" + fecha + ".kml");
-                    // Almaceno en la cadena fichero la ruta del fichero que
-                    // tendremos que subir al FTP
-                    //GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + GlobalClass.global_localiz + "-" + deviceId +"-"+fecha+ ".kml";
-                    GlobalClass.FicheroKML = logsDirectory + "/" + nombrefichero + "-" + deviceId + "-" + fecha + ".kml";
-                    if (!nmea_file.exists()) {
-                        flag = nmea_file.createNewFile();
-                        Toast.makeText(this, R.string.FicheroKMLNoExiste, Toast.LENGTH_LONG).show();
+                    nmea_writer = new FileWriter(nmea_file, true);
+                    CharSequence nmea = cabecera;
 
-                        nmea_writer = new FileWriter(nmea_file, true);
-                        CharSequence nmea = cabecera;
-
-                        nmea_writer.append(nmea);
-                        nmea_writer.flush();
-                    }
-                } catch (IOException ex) {
-                    Toast.makeText(this, R.string.NoESCTarjeta, Toast.LENGTH_LONG).show();
-                    Toast.makeText(this, ex.getMessage().toString() + R.string.fichero + GlobalClass.FicheroKML, Toast.LENGTH_LONG).show();
-                } finally {
-                    if (nmea_writer != null) {
-                        try {
-                            nmea_writer.close();
-                        } catch (IOException e) {
-                            Toast.makeText(this, R.string.ErrorFichero, Toast.LENGTH_LONG).show();
-                        }
+                    nmea_writer.append(nmea);
+                    nmea_writer.flush();
+                }
+            } catch (IOException ex) {
+                Toast.makeText(this, R.string.NoESCTarjeta, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, ex.getMessage().toString() + R.string.fichero + GlobalClass.FicheroKML, Toast.LENGTH_LONG).show();
+            } finally {
+                if (nmea_writer != null) {
+                    try {
+                        nmea_writer.close();
+                    } catch (IOException e) {
+                        Toast.makeText(this, R.string.ErrorFichero, Toast.LENGTH_LONG).show();
                     }
                 }
             }
         }
         return flag;
-
     }
 
     public void lanzaavisoSubir() {
@@ -874,7 +874,7 @@ public class Install_sinapseActivity extends Activity {
         return id;
     }
 
-    public String NombreInstalacion(String archivo) throws IOException {
+    public String nombreInstalacion(String archivo) throws IOException {
         String cadena = "";
         String aux;
         FileReader f;
@@ -891,18 +891,28 @@ public class Install_sinapseActivity extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
+            case CALL_PHONE_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    callSupportPhone();
+                }
+                return;
+            }
             case READ_PHONE_STATE_PERMISSION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay! Do the contacts-related task you need to do.
-                    TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                    deviceId = telephonyManager.getDeviceId();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    viewKlmFileInGoogleEarth();
+                }
+                return;
+            }
+
+            case WRITE_EXTERNAL_STORAGE_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    createFile("Mapa Sinapse Instalaciones", GlobalClass.CabeceraKML);
                 }
                 return;
             }
@@ -910,6 +920,18 @@ public class Install_sinapseActivity extends Activity {
             // other 'case' lines to check for other
             // permissions this app might request.
         }
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 }
 

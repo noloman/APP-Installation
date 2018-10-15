@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout android:id="@+id/menu_balast"
          android:layout_width="fill_parent"
@@ -105,8 +107,9 @@
         android:layout_gravity="right"
         android:layout_marginBottom="1dip"
         android:layout_marginRight="1dip"
-           android:background="@drawable/transparent"
-        android:src="@drawable/continuar2"
+        android:background="@drawable/transparent"
+        android:src="@drawable/continuar_alineado"
+        tools:visibility="visible"
         android:visibility="invisible" >
     </ImageButton>
   </LinearLayout>

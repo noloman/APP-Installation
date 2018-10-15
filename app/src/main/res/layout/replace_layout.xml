@@ -1,68 +1,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
-
-   <LinearLayout android:id="@+id/menu_replace"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:weightSum="1" >
+    android:layout_height="fill_parent">
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logosinapse" />
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.05"
-        android:text="Reemplazo de dispositivo"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#000000" />
+    <LinearLayout
+        android:id="@+id/menu_replace"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logosinapse" />
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:text="Reemplazo de dispositivo"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#000000" />
         <!--  android:textAppearance="@style/BoldFont24" -->
-        
-	    <View
-			android:layout_width="fill_parent"
-			android:layout_height="2dp"
-			android:background="@android:color/black"/>
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Pulsa para escanear el código del dispositivo a reemplazar"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#000000"
-        android:layout_marginTop="15px"
-        android:layout_marginBottom="15px"
-        android:layout_marginLeft="10px"
-        android:layout_marginRight="10px" />
-	
-     <ImageButton
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="15px"
+            android:layout_marginRight="10px"
+            android:layout_marginBottom="15px"
+            android:gravity="center"
+            android:text="Pulsa para escanear el código del dispositivo a reemplazar"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000" />
+
+        <ImageButton
             android:id="@+id/scanButton"
-            android:layout_marginTop="20px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="20px"
             android:background="@drawable/transparent"
-            android:src="@drawable/qrbutton" >
-        </ImageButton>
-    	
-	     <ImageButton
-         android:id="@+id/ButtonAtras"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="15px"
-           android:background="@drawable/transparent"
-         android:src="@drawable/back"
-         android:layout_gravity="bottom" 
-         android:layout_marginTop="30px"/>
-	    
+            android:src="@drawable/qrbutton" />
 
-    
-
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/ButtonAtras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15px"
+            android:layout_marginTop="30px"
+            android:background="@drawable/transparent"
+            android:src="@drawable/atras_alineado" />
+    </LinearLayout>
 </LinearLayout>

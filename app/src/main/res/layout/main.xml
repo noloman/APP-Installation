@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            android:background="@drawable/transparent"
-            android:src="@drawable/logo" >
+            android:src="@drawable/logo_sinapse" >
            
         </ImageView>
 
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/transparent"
-                    android:src="@drawable/easycontrol" />
+                    android:src="@drawable/instalacion_100x100_300dpi" />
 			  <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/transparent"
                     android:gravity="center"
-                    android:src="@drawable/replace" />
+                    android:src="@drawable/reemplazar_dispositivo_100x100_300dpi" />
                 
                 <TextView
                     android:id="@+id/TextView01"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/transparent"
                 android:gravity="center"
-                android:src="@drawable/archivos" />
+                android:src="@drawable/subir_archivos_100x100_300dpi" />
             
              <TextView
                 android:id="@+id/TextView02"
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/transparent"
                 android:gravity="center"
-                android:src="@drawable/pushpin" />
+                android:src="@drawable/generar_parte_de_trabajo_100x100_300dpi" />
             
                   <TextView
                 android:id="@+id/TextView03"
@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/transparent"
                 android:gravity="center"
-                android:src="@drawable/maps" />
+                android:src="@drawable/ver_puntos_en_el_mapa_100x100_300dpi" />
             
              <TextView
                 android:id="@+id/TextView03"

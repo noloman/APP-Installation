@@ -12,7 +12,7 @@
         android:weightSum="1"
         android:layout_marginTop="15px" >
 
-      
+
 
         <TextView
             android:id="@+id/textGPSTomando"
@@ -24,13 +24,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000" >
         </TextView>
-        
+
     <ImageButton
         android:id="@+id/GPSButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/transparent"
-        android:src="@drawable/gps2" >
+        android:src="@drawable/gps_120x160" >
     </ImageButton>
 
         <TextView
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dip"
                 android:background="@drawable/transparent"
-                android:src="@drawable/maps2" />
+                android:src="@drawable/mapa_80x80_100dpi" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -87,7 +87,7 @@
             android:layout_height="5dip"
             android:background="@drawable/mygradient" />
 
-		
+
         <TextView
             android:id="@+id/TextoECoBalast"
             android:layout_width="wrap_content"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
            	android:background="@drawable/transparent"
-            android:src="@drawable/scanner" >
+            android:src="@drawable/qrbutton" >
         </ImageButton>
 
         <TextView
@@ -115,9 +115,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="">
-            <!--  android:textAppearance="@style/BoldFont"--> 
+            <!--  android:textAppearance="@style/BoldFont"-->
         </TextView>
- 
+
     </LinearLayout>
 
 </ScrollView>

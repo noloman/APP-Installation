@@ -20,6 +20,7 @@ import org.apache.commons.net.ftp.FTP;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,6 +40,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresPermission;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -176,7 +178,7 @@ public class ComienzoInstalacion_activity  extends Activity{
 			con.connect("89.248.100.11");
 			if (con.login("trazabilidad", "napse1si")) 
 			{
-				//creamos en el servidor una carpeta con el nombre del lugar de instalación
+				//creamos en el servidor una carpeta con el nombre del lugar de instalaciï¿½n
 				con.makeDirectory("/Instalacion-"+GlobalClass.global_localiz); 
 				con.enterLocalPassiveMode(); // important!
 				/*
@@ -323,34 +325,34 @@ public class ComienzoInstalacion_activity  extends Activity{
 			//el cual se encarga de todas las conexiones del terminal
 			ConnectivityManager conMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 			//Recogemos el estado del 3G
-			//como vemos se recoge con el parámetro 0
+			//como vemos se recoge con el parï¿½metro 0
 			State internet_movil = conMan.getNetworkInfo(0).getState();
 			//Recogemos el estado del wifi
-			//En este caso se recoge con el parámetro 1
+			//En este caso se recoge con el parï¿½metro 1
 			State wifi = conMan.getNetworkInfo(1).getState();
-			//Miramos si el internet 3G está conectado o conectandose...
+			//Miramos si el internet 3G estï¿½ conectado o conectandose...
 			if (internet_movil == NetworkInfo.State.CONNECTED|| internet_movil == NetworkInfo.State.CONNECTING) 
 			{
 			     ///////////////
-			     //El movil está conectado por 3G
-			     //En este ejemplo mostraríamos mensaje por pantalla
+			     //El movil estï¿½ conectado por 3G
+			     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 			     //Toast.makeText(getApplicationContext(), "Conectado por 3G", Toast.LENGTH_LONG).show();
-			     //Si no esta por 3G comprovamos si está conectado o conectandose al wifi...
+			     //Si no esta por 3G comprovamos si estï¿½ conectado o conectandose al wifi...
 			    Log.i("Estado","Subiendo archivos por 3G"); 
 			    alerta3G();
 			} 
 			else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) 
 			{
 			     ///////////////
-			     //El movil está conectado por WIFI
-			     //En este ejemplo mostraríamos mensaje por pantalla
+			     //El movil estï¿½ conectado por WIFI
+			     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 			     //Toast.makeText(getApplicationContext(), "Conectado por WIFI", Toast.LENGTH_LONG).show();
 				Log.i("Estado","Subiendo archivos por WIFI"); 
 				
 			}
 			else
 			{
-				Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexión", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexiï¿½n", Toast.LENGTH_LONG).show();
 			}
 		}
 		// Crea una alerta de que no hay coordenadas GPS correctas
@@ -358,7 +360,7 @@ public class ComienzoInstalacion_activity  extends Activity{
 			{
 							AlertDialog.Builder builder = new AlertDialog.Builder(this);
 					 
-					        builder.setMessage("Estás conectado por 3G. El proceso puede tardar un tiempo. ¿Desea continuar?")
+					        builder.setMessage("Estï¿½s conectado por 3G. El proceso puede tardar un tiempo. ï¿½Desea continuar?")
 					        .setTitle("Confirmacion")
 					        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  
 					        {
@@ -479,7 +481,8 @@ public class ComienzoInstalacion_activity  extends Activity{
 				}
 				return false;
 			}
-			
+
+			@RequiresPermission(Manifest.permission.READ_PHONE_STATE)
 			private void mostrarLog() 
 			{
 				GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
@@ -567,13 +570,13 @@ public class ComienzoInstalacion_activity  extends Activity{
 					}
 					
 				}
-						String linea_log = "Instalación "+GlobalClass.global_localiz + "\n"
+						String linea_log = "Instalaciï¿½n "+GlobalClass.global_localiz + "\n"
 		        				+"********************\n"+ 
 		        			    "Fecha y hora: " +fecha + "\n"
 		        					+ "IMEI" + deviceId + "\n" 
 		        				+ "Marca del dispositivo: " + Build.BRAND + "\n"
 		        				+ "Operador: " + operador + "\n"
-		        				+ "Fichero de instalación: " + GlobalClass.global_fichero + "\n"
+		        				+ "Fichero de instalaciï¿½n: " + GlobalClass.global_fichero + "\n"
 		        				+ "-----------------------------------------------------\n"; 
 		        	
 		        	Log.i("Linea_completa", linea_log);
@@ -601,8 +604,8 @@ public class ComienzoInstalacion_activity  extends Activity{
 		{
 			AlertDialog.Builder popup = new AlertDialog.Builder(this);
 			popup.setTitle("Salir sin guardar");
-			popup.setMessage("Si sales de la instalación sin guardar, se perderán todos los progresos.");
-			popup.setPositiveButton("Sí", new DialogInterface.OnClickListener() 
+			popup.setMessage("Si sales de la instalaciï¿½n sin guardar, se perderï¿½n todos los progresos.");
+			popup.setPositiveButton("Sï¿½", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int id)
 				{
@@ -620,8 +623,8 @@ public class ComienzoInstalacion_activity  extends Activity{
 		{
 			AlertDialog.Builder popup = new AlertDialog.Builder(this);
 			popup.setTitle("Guardar instalacion realizada");
-			popup.setMessage("¿Estas seguro que deseas realizar esta acción?");
-			popup.setPositiveButton("Sí", new DialogInterface.OnClickListener() 
+			popup.setMessage("ï¿½Estas seguro que deseas realizar esta acciï¿½n?");
+			popup.setPositiveButton("Sï¿½", new DialogInterface.OnClickListener() 
 			{
 				public void onClick(DialogInterface dialog, int id)
 				{
@@ -641,7 +644,7 @@ public class ComienzoInstalacion_activity  extends Activity{
 					//creamos fichero txt 
 					mostrarLog();
 					 
-					//añade dispositivos instalados al kml
+					//aï¿½ade dispositivos instalados al kml
 					if(GlobalClass.MC_BE.size()>0)
 					{
 						for(int i=0; i<GlobalClass.MC_BE.size();i++)

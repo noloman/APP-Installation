@@ -1,18 +1,26 @@
 package install.sinapse;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Toast;
 
-import install.sinapse.R;
-
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,30 +36,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.content.Context;
-import android.content.IntentSender;
-import android.content.SharedPreferences;
-import android.graphics.Point;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class MapsActivity extends FragmentActivity {
-
+    private static final int MY_LOCATION_PERMISSION = 0x05;
     // Google Map
     GoogleMap mapa;
     //LocationClient mlocation;
     Location location = null;
-    private LocationManager locationManager;
     @SuppressWarnings("unused")
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     MarkerOptions mp = new MarkerOptions();
@@ -70,74 +67,83 @@ public class MapsActivity extends FragmentActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mapa = googleMap;
+                if (mapa == null) {
+                    Log.i("Aviso Mapa", "null");
+                    Toast.makeText(MapsActivity.this, "Google Maps not avaible", Toast.LENGTH_LONG).show();
+                } else {
+                    mapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MapsActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                MY_LOCATION_PERMISSION);
+                    } else {
+                        mapa.setMyLocationEnabled(true);
+                    }
+
+                    LatLng espana = new LatLng(40.346077, -3.744769);
+                    CameraPosition camPos = new CameraPosition.Builder()
+                            .target(espana)   //Centramos el mapa en Madrid
+                            .zoom(5)         //Establecemos el zoom en 19        //Bajamos el punto de vista de la c�mara 70 grados
+                            .build();
+
+
+                    CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(camPos);
+
+                    mapa.animateCamera(camUpd3);
+
+                    mostrarMarcador(GlobalClass.latitud, GlobalClass.longitud);
+
+                    mapa.setOnMapClickListener(new OnMapClickListener() {
+                        public void onMapClick(LatLng point) {
+                            mapa.clear();
+                            Projection proj = mapa.getProjection();
+                            Point coord = proj.toScreenLocation(point);
+
+                            GlobalClass.latitud = point.latitude;
+                            GlobalClass.longitud = point.longitude;
+                            mostrarMarcador(GlobalClass.latitud, GlobalClass.longitud);
+                            if (ContextCompat.checkSelfPermission(MapsActivity.this,
+                                    Manifest.permission.READ_PHONE_STATE)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(MapsActivity.this,
+                                        new String[]{Manifest.permission.READ_PHONE_STATE},
+                                        Install_sinapseActivity.READ_PHONE_STATE_PERMISSION);
+                            } else {
+                                mostrarLog();
+                            }
+
+                            Toast.makeText(MapsActivity.this, "Click\n" + "Lat: " + point.latitude + "\n" + "Lng: " + point.longitude + "\n" + "X: " + coord.x + " - Y: " + coord.y, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    mapa.setOnMapLongClickListener(new OnMapLongClickListener() {
+                        public void onMapLongClick(LatLng point) {
+                            Projection proj = mapa.getProjection();
+                            Point coord = proj.toScreenLocation(point);
+
+                            Toast.makeText(MapsActivity.this, "Click Largo\n" + "Lat: " + point.latitude + "\n" + "Lng: " + point.longitude + "\n" + "X: " + coord.x + " - Y: " + coord.y, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    mapa.setOnCameraChangeListener(new OnCameraChangeListener() {
+                        public void onCameraChange(CameraPosition position) {
+
+                        }
+                    });
+
+                    mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
+                        public boolean onMarkerClick(Marker marker) {
+                            Toast.makeText(MapsActivity.this, "Marcador pulsado:\n" + marker.getPosition(), Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+                    });
+                }
             }
         });
-
-
-        if (mapa == null) {
-            Log.i("Aviso Mapa", "null");
-            Toast.makeText(this, "Google Maps not avaible", Toast.LENGTH_LONG).show();
-
-        } else {
-            mapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
-        }
-
-        mapa.setMyLocationEnabled(true);
-
-        LatLng espana = new LatLng(40.346077, -3.744769);
-        CameraPosition camPos = new CameraPosition.Builder()
-                .target(espana)   //Centramos el mapa en Madrid
-                .zoom(5)         //Establecemos el zoom en 19        //Bajamos el punto de vista de la c�mara 70 grados
-                .build();
-
-
-        CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(camPos);
-
-        mapa.animateCamera(camUpd3);
-
-        mostrarMarcador(GlobalClass.latitud, GlobalClass.longitud);
-
-        mapa.setOnMapClickListener(new OnMapClickListener() {
-            public void onMapClick(LatLng point) {
-                mapa.clear();
-                Projection proj = mapa.getProjection();
-                Point coord = proj.toScreenLocation(point);
-
-                GlobalClass.latitud = point.latitude;
-                GlobalClass.longitud = point.longitude;
-                mostrarMarcador(GlobalClass.latitud, GlobalClass.longitud);
-                //mostrarLog(location);
-                mostrarLog();
-
-                Toast.makeText(MapsActivity.this, "Click\n" + "Lat: " + point.latitude + "\n" + "Lng: " + point.longitude + "\n" + "X: " + coord.x + " - Y: " + coord.y, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mapa.setOnMapLongClickListener(new OnMapLongClickListener() {
-            public void onMapLongClick(LatLng point) {
-                Projection proj = mapa.getProjection();
-                Point coord = proj.toScreenLocation(point);
-
-                Toast.makeText(MapsActivity.this, "Click Largo\n" + "Lat: " + point.latitude + "\n" + "Lng: " + point.longitude + "\n" + "X: " + coord.x + " - Y: " + coord.y, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mapa.setOnCameraChangeListener(new OnCameraChangeListener() {
-            public void onCameraChange(CameraPosition position) {
-
-            }
-        });
-
-        mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
-            public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(MapsActivity.this, "Marcador pulsado:\n" + marker.getPosition(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
     }
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     private void mostrarLog() {
         //List<String> locationProvider = locationManager.getAllProviders();
         GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
@@ -335,4 +341,22 @@ public class MapsActivity extends FragmentActivity {
 		 finish();*/
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Install_sinapseActivity.READ_PHONE_STATE_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mostrarLog();
+                }
+                return;
+            }
+            case MY_LOCATION_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mapa.setMyLocationEnabled(true);
+
+                }
+                return;
+            }
+        }
+    }
 }

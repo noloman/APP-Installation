@@ -1,8 +1,8 @@
 // **** FUNCION PRINCIPAL DE LA APLICACION ****
 // Autor: Celia Moreno 
 // ********************************************
-// Esta actividad llama a Gps_activity para añadir un nuevo punto de la instalacion
-// Así mismo cuando se desea reemplazar una radio, se llama a la actividad Replace
+// Esta actividad llama a Gps_activity para aï¿½adir un nuevo punto de la instalacion
+// Asï¿½ mismo cuando se desea reemplazar una radio, se llama a la actividad Replace
 
 package install.sinapse;
 
@@ -76,7 +76,7 @@ public class Install_sinapseActivity extends Activity
 	GlobalClass global = new GlobalClass();
 	String[] directorio_archivos;
 	File root = Environment.getExternalStorageDirectory(); 		//Accedemos a la tarjeta SD
-	File logsDirectory = new File(root + "/sinapse/install/"); 	//Dirección del directorio
+	File logsDirectory = new File(root + "/sinapse/install/"); 	//Direcciï¿½n del directorio
 	boolean archivos_subidos = true;
 	
 	/** Called when the activity is first created. */
@@ -101,7 +101,7 @@ public class Install_sinapseActivity extends Activity
 				e1.printStackTrace();
 			}
 	     
-		//Añadir un punto de instalación
+		//Aï¿½adir un punto de instalaciï¿½n
 		this.addButton.setOnClickListener(new OnClickListener() 
 		{
 			public void onClick(View v) 
@@ -115,7 +115,7 @@ public class Install_sinapseActivity extends Activity
 			}
 		});
 		
-		//Reemplazar un punto de instalación
+		//Reemplazar un punto de instalaciï¿½n
 		this.replaceButton.setOnClickListener(new OnClickListener() 
 		{
 			public void onClick(View v) 
@@ -265,7 +265,7 @@ public class Install_sinapseActivity extends Activity
 	{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			 
-			builder.setMessage("Estás conectado por 3G. El proceso puede tardar un tiempo. ¿Desea continuar?")
+			builder.setMessage("Estï¿½s conectado por 3G. El proceso puede tardar un tiempo. ï¿½Desea continuar?")
 			.setTitle("Confirmacion")
 			.setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  
 			{
@@ -313,8 +313,8 @@ public class Install_sinapseActivity extends Activity
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(
-							"Su terminal no permite el uso de esta aplicación. "
-						  + "Póngase en contacto con Sinapse Energía")
+							"Su terminal no permite el uso de esta aplicaciï¿½n. "
+						  + "Pï¿½ngase en contacto con Sinapse Energï¿½a")
 						  .setCancelable(false)
 						  .setPositiveButton("Llamar a Soporte Sinapse",
 								  			new DialogInterface.OnClickListener() 
@@ -413,7 +413,7 @@ public class Install_sinapseActivity extends Activity
 	{
 		AlertDialog.Builder popup = new AlertDialog.Builder(this);
 		popup.setTitle("Subir archivos");
-		popup.setMessage("¿Deseas realizar la acción?");
+		popup.setMessage("ï¿½Deseas realizar la acciï¿½n?");
 		popup.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int id)
@@ -422,34 +422,34 @@ public class Install_sinapseActivity extends Activity
 				//el cual se encarga de todas las conexiones del terminal
 				ConnectivityManager conMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 				//Recogemos el estado del 3G
-				//como vemos se recoge con el parámetro 0
+				//como vemos se recoge con el parï¿½metro 0
 				State internet_movil = conMan.getNetworkInfo(0).getState();
 				//Recogemos el estado del wifi
-				//En este caso se recoge con el parámetro 1
+				//En este caso se recoge con el parï¿½metro 1
 				State wifi = conMan.getNetworkInfo(1).getState();
-				//Miramos si el internet 3G está conectado o conectandose...
+				//Miramos si el internet 3G estï¿½ conectado o conectandose...
 				if (internet_movil == NetworkInfo.State.CONNECTED|| internet_movil == NetworkInfo.State.CONNECTING) 
 				{
 				     ///////////////
-				     //El movil está conectado por 3G
-				     //En este ejemplo mostraríamos mensaje por pantalla
+				     //El movil estï¿½ conectado por 3G
+				     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 				     //Toast.makeText(getApplicationContext(), "Conectado por 3G", Toast.LENGTH_LONG).show();
-				     //Si no esta por 3G comprovamos si está conectado o conectandose al wifi...
+				     //Si no esta por 3G comprovamos si estï¿½ conectado o conectandose al wifi...
 				    Log.i("Estado","Subiendo archivos por 3G"); 
 				    alerta3G();
 				} 
 				else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) 
 				{
 				     ///////////////
-				     //El movil está conectado por WIFI
-				     //En este ejemplo mostraríamos mensaje por pantalla
+				     //El movil estï¿½ conectado por WIFI
+				     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 				     //Toast.makeText(getApplicationContext(), "Conectado por WIFI", Toast.LENGTH_LONG).show();
 					Log.i("Estado","Subiendo archivos por WIFI"); 
 					SubirJSON();
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexión", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexiï¿½n", Toast.LENGTH_LONG).show();
 				}
 				
 			}
@@ -677,7 +677,7 @@ public class Install_sinapseActivity extends Activity
 			try 
 			{
 				FTPClient ftpClient = new FTPClient();   
-				ftpClient.connect(InetAddress.getByName("89.248.100.11"), 21);
+				ftpClient.connect(InetAddress.getByName("ftp.sinapseenergia.com"), 21);
 		        ftpClient.login("trazabilidad", "napse1si");
 		        ftpClient.makeDirectory("/Instalacion-"+GlobalClass.global_localiz+"/FORZADOS");
 		        ftpClient.enterLocalPassiveMode();
@@ -685,7 +685,7 @@ public class Install_sinapseActivity extends Activity
 		        Log.i("Estado", "Conectado al servidor FTP");
 		        
 		        BufferedInputStream buffIn=null;
-		        //Aqui envío los archivos creados
+		        //Aqui envï¿½o los archivos creados
 		 	    for(int i = 0; i < directorio_archivos.length; ++i)
 		 	    {
 		 		   if(directorio_archivos[i].contains("forzado"))
@@ -758,7 +758,7 @@ public class Install_sinapseActivity extends Activity
 			}
 			else
 			{
-				Toast.makeText(Install_sinapseActivity.this, "Error al subir uno o más archivos", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Install_sinapseActivity.this, "Error al subir uno o mï¿½s archivos", Toast.LENGTH_SHORT).show();
 			}
 		}
 		
@@ -811,9 +811,9 @@ public class Install_sinapseActivity extends Activity
    public void lanzarAvisoSalir()
 	{
 		/*AlertDialog.Builder popup = new AlertDialog.Builder(this);
-		popup.setTitle("Salir de la aplicación");
-		popup.setMessage("¿Estas seguro que deseas realizar esta acción?");
-		popup.setPositiveButton("Sí", new DialogInterface.OnClickListener() 
+		popup.setTitle("Salir de la aplicaciï¿½n");
+		popup.setMessage("ï¿½Estas seguro que deseas realizar esta acciï¿½n?");
+		popup.setPositiveButton("Sï¿½", new DialogInterface.OnClickListener() 
 		{
 			public void onClick(DialogInterface dialog, int id)
 			{

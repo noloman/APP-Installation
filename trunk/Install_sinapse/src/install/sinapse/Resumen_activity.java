@@ -190,7 +190,7 @@ public class Resumen_activity extends Activity
 		regulacion.setAdapter(adapter8);
 		regulacion.setOnItemSelectedListener(new MyOnItemSelectedListener8());
 		
-		//Como ya estoy con los datos del balasto, lo siguiente que tendré que escanear
+		//Como ya estoy con los datos del balasto, lo siguiente que tendrï¿½ que escanear
 		//es el EC seguro.
 		GlobalClass.global_buscaEC=true; 
 		
@@ -1941,14 +1941,14 @@ public class Resumen_activity extends Activity
 	public void lanzaaviso2() 
 	{
 		AlertDialog.Builder popup = new AlertDialog.Builder(this);
-		popup.setTitle("Debe seleccionar una opción correcta");
-		popup.setMessage("Por favor, selecciona una opción correcta");
+		popup.setTitle("Debe seleccionar una opciï¿½n correcta");
+		popup.setMessage("Por favor, selecciona una opciï¿½n correcta");
 		popup.setPositiveButton("Ok", null);
 		popup.show();
 	}
 	
 	public String reemplazarCaracteresEspeciales(String input) {
-	    String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇñÑ";
+	    String original = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 	    String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcCnN";
 	    String output = input;
 	    for (int i=0; i<original.length(); i++) {
@@ -2117,10 +2117,10 @@ public class Resumen_activity extends Activity
 			org.apache.commons.net.ftp.FTPClient con = new org.apache.commons.net.ftp.FTPClient();
 			try 
 			{
-				con.connect("89.248.100.11");
+				con.connect("ftp.sinapseenergia.com");
 				if (con.login("trazabilidad", "napse1si")) 
 				{
-					//creamos en el servidor una carpeta con el nombre del lugar de instalación
+					//creamos en el servidor una carpeta con el nombre del lugar de instalaciï¿½n
 					con.makeDirectory("/Instalacion-"+GlobalClass.global_localiz); 
 					con.enterLocalPassiveMode(); // important!
 					/*

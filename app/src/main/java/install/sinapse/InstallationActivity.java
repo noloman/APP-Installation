@@ -2,11 +2,17 @@ package install.sinapse;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class InstallationActivity extends FragmentActivity {
     private EditText installationIdEditText;
@@ -25,11 +31,25 @@ public class InstallationActivity extends FragmentActivity {
                 if (installationIdEditText != null
                         && installationIdEditText.getText() != null
                         && !installationIdEditText.getText().toString().isEmpty()) {
-                    Intent intent = new Intent(InstallationActivity.this,
-                            Install_sinapseActivity.class);
+                    createFile(installationIdEditText.getText().toString());
+                    Intent intent = new Intent(InstallationActivity.this, Install_sinapseActivity.class);
+//                    Intent intent = new Intent(InstallationActivity.this, ComienzoInstalacion_activity.class);
                     startActivity(intent);
                 }
             }
         });
+    }
+
+    private void createFile(String installationName) {
+        File file = new File(Environment.getExternalStorageDirectory() + "/sinapse/install/IdInstall.txt");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(installationName.getBytes());
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

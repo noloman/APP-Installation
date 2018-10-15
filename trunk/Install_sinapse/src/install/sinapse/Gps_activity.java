@@ -100,7 +100,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		MapsButton = (ImageButton) findViewById(R.id.mapButton);
 		scanButton = (ImageButton) findViewById(R.id.scanButton);
 		
-		MapsButton.setEnabled(true); //Activamos el boton de localización	
+		MapsButton.setEnabled(true); //Activamos el boton de localizaciï¿½n	
 		scanButton.setEnabled(false);//Desactivamos el boton de escaneo de easycontrol
 
 		manual = false;
@@ -117,24 +117,24 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		
 		if(GlobalClass.global_remplazo == true)
 		{
-			textGPSTomando.setText("Localización del Dispositivo");
+			textGPSTomando.setText("Localizaciï¿½n del Dispositivo");
 			TextoECoBalast.setText("Escanea ahora el dispositivo nuevo");
 		}
 		else
 		{
 			switch(GlobalClass.global_tipo)
 			{
-			case 1: textGPSTomando.setText("Localización del Punto");
+			case 1: textGPSTomando.setText("Localizaciï¿½n del Punto");
 				break;
-			case 2: textGPSTomando.setText("Localización del Cuadro");
-				break;
-				
-			case 3: textGPSTomando.setText("Localización del Punto de Acceso");
+			case 2: textGPSTomando.setText("Localizaciï¿½n del Cuadro");
 				break;
 				
-			case 4: textGPSTomando.setText("Localización del Dispositivo");
+			case 3: textGPSTomando.setText("Localizaciï¿½n del Punto de Acceso");
 				break;
-			case 5: textGPSTomando.setText("Localización del Punto");
+				
+			case 4: textGPSTomando.setText("Localizaciï¿½n del Dispositivo");
+				break;
+			case 5: textGPSTomando.setText("Localizaciï¿½n del Punto");
 				break;
 			}
 		}
@@ -142,7 +142,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		if (GlobalClass.global_buscaOtro == false && GlobalClass.global_remplazo == false && GlobalClass.global_buscaEC == false && GlobalClass.global_buscaPA==false && GlobalClass.global_buscaCMC == false) 
 		{
 			GlobalClass.cont_balasto++;		
-			TextoECoBalast.setText("Escanea el código del Balasto o Driver ");
+			TextoECoBalast.setText("Escanea el cï¿½digo del Balasto o Driver ");
 			if ((GlobalClass.balasto_marca.compareTo("SINAPSE") == 0) || (GlobalClass.balasto2_marca.compareTo("SINAPSE") == 0)) 
 			{
 
@@ -173,12 +173,12 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		
 		if(s.compareToIgnoreCase("ALTA")==0)
 		{
-			Toast.makeText(getApplicationContext(), "Precisión GPS Alta", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Precisiï¿½n GPS Alta", Toast.LENGTH_SHORT).show();
 			c.setAccuracy(Criteria.ACCURACY_FINE);
 		}
 		else
 		{
-			Toast.makeText(getApplicationContext(), "Precisión GPS Media", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Precisiï¿½n GPS Media", Toast.LENGTH_SHORT).show();
 			c.setAccuracy(Criteria.ACCURACY_COARSE);
 		}
 		
@@ -206,7 +206,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		locationManager.requestSingleUpdate(provider, this, getMainLooper());
 
 		//Si tengo la misma posicion que antes o no tengo posicion directamente, habilito la posibilidad
-		//de añadir el punto con el mapa
+		//de aï¿½adir el punto con el mapa
 		if (GlobalClass.latitud == 0.00000000)
 		{
 			 alertaGPS();
@@ -283,12 +283,12 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 				
 				if(s.compareToIgnoreCase("ALTA")==0)
 				{
-					Toast.makeText(getApplicationContext(), "Precisión GPS Alta", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Precisiï¿½n GPS Alta", Toast.LENGTH_SHORT).show();
 					c.setAccuracy(Criteria.ACCURACY_FINE);
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "Precisión GPS Media", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Precisiï¿½n GPS Media", Toast.LENGTH_SHORT).show();
 					c.setAccuracy(Criteria.ACCURACY_COARSE);
 				}
 				
@@ -510,9 +510,9 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
         String precision = pref.getString("GPS", "ALTA");
         Log.i("Latitud",loc.getLatitude()+"");
 	    Log.i("Longitud",loc.getLongitude()+"");
-	    Log.i("Precisión",precision+"-"+loc.getAccuracy()+"");
+	    Log.i("Precisiï¿½n",precision+"-"+loc.getAccuracy()+"");
 	    Log.i("Altitud",loc.getAltitude()+"");
-	    Log.i("Orientación",loc.getBearing()+"");
+	    Log.i("Orientaciï¿½n",loc.getBearing()+"");
 	    Log.i("Velocidad",loc.getSpeed()+"");
 	    Log.i("Fecha y Hora", sdf.format(calendar.getTime()));
 	    Log.i("Dia", fecha_dia);
@@ -541,7 +541,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 	private void createGpsDisabledAlert() 
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("El GPS esta deshabilitado. ¿Desea activarlo?")
+		builder.setMessage("El GPS esta deshabilitado. ï¿½Desea activarlo?")
 				.setCancelable(false)
 				.setPositiveButton("Activar GPS",
 						new DialogInterface.OnClickListener() 
@@ -561,7 +561,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(
-				"No se tienen coordenadas GPS correctas, inténtelo de nuevo")
+				"No se tienen coordenadas GPS correctas, intï¿½ntelo de nuevo")
 				.setCancelable(false)
 				.setPositiveButton("Ok", new DialogInterface.OnClickListener() 
 				{
@@ -576,7 +576,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 
 	// If the user decides they want to turn their GPS on, and they select the
 	// positive action of the dialog, showGpsOptions() is called. All this
-	// method does is to show the “Locations and Security” page from the Android
+	// method does is to show the ï¿½Locations and Securityï¿½ page from the Android
 	// settings menu. As a small sidenote, as of Android 1.5, there is no way to
 	// directly toggle the location settings through code, so we have to assume
 	// the user can figure it out if shown the proper screen. The code for
@@ -638,7 +638,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		super.onPause();
 		locationManager.removeUpdates(this);
 		// GlobalClass.global_buscaEC = true;
-		// TextoECoBalast.setText("Escanea código de EasyControl");
+		// TextoECoBalast.setText("Escanea cï¿½digo de EasyControl");
 //		((ImageButton) this.findViewById(R.id.scanButton)).setEnabled(true);
 //		locationManager.requestSingleUpdate(provider, this, getMainLooper());
 //		locationManager.requestLocationUpdates(provider, 400, 1, this);
@@ -956,7 +956,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 							{
 								if(contents.substring(0, 2).compareTo("SM") == 0 || contents.substring(0, 2).compareTo("MC") == 0)
 								{
-									Toast.makeText(this,"El módulo de comunicación escaneado es "+ contents.toString(),Toast.LENGTH_SHORT).show();
+									Toast.makeText(this,"El mï¿½dulo de comunicaciï¿½n escaneado es "+ contents.toString(),Toast.LENGTH_SHORT).show();
 									GlobalClass.global_MC = contents.toString();
 									Intent i = new Intent();
 									i.setClass(Gps_activity.this,formPunto_activity.class);
@@ -971,7 +971,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 										GlobalClass.global_buscaEC = false;
 										GlobalClass.global_tipo = 5;
 										GlobalClass.global_EC = contents.toString();
-										TextoECoBalast.setText("Escanea el código de Balasto.");
+										TextoECoBalast.setText("Escanea el cï¿½digo de Balasto.");
 										Intent intent3 = new Intent();
 										intent3.setClass(Gps_activity.this,balastcod_activity.class);
 										startActivity(intent3);
@@ -980,7 +980,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 									else
 									{	
 										AlertDialog.Builder popup = new AlertDialog.Builder(this);
-										popup.setTitle("Error de código de barras");
+										popup.setTitle("Error de cï¿½digo de barras");
 										popup.setMessage("El dispositivo que esta escaneando no es correcto.");
 										popup.setPositiveButton("Volver a escanear", null);
 										popup.show();
@@ -1006,7 +1006,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 							else
 							{
 								AlertDialog.Builder popup = new AlertDialog.Builder(this);
-								popup.setTitle("Error de código de barras");
+								popup.setTitle("Error de cï¿½digo de barras");
 								popup.setMessage("El dispositivo que esta escaneando no es correcto.");
 								popup.setPositiveButton("Volver a escanear", null);
 								popup.show();
@@ -1039,7 +1039,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 							else
 							{
 								AlertDialog.Builder popup = new AlertDialog.Builder(this);
-								popup.setTitle("Error de código de barras");
+								popup.setTitle("Error de cï¿½digo de barras");
 								popup.setMessage("El dispositivo que esta escaneando no es correcto.");
 								popup.setPositiveButton("Volver a escanear", null);
 								popup.show();
@@ -1094,7 +1094,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 						else 
 						{								
 							AlertDialog.Builder popup = new AlertDialog.Builder(this);
-							popup.setTitle("Error del código qr");
+							popup.setTitle("Error del cï¿½digo qr");
 							popup.setMessage("El dispositivo que esta escaneando no es correcto, debe escanear el balasto.");
 							popup.setPositiveButton("Volver a escanear", null);
 							popup.show();
@@ -1281,34 +1281,34 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		//el cual se encarga de todas las conexiones del terminal
 		ConnectivityManager conMan = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 		//Recogemos el estado del 3G
-		//como vemos se recoge con el parámetro 0
+		//como vemos se recoge con el parï¿½metro 0
 		State internet_movil = conMan.getNetworkInfo(0).getState();
 		//Recogemos el estado del wifi
-		//En este caso se recoge con el parámetro 1
+		//En este caso se recoge con el parï¿½metro 1
 		State wifi = conMan.getNetworkInfo(1).getState();
-		//Miramos si el internet 3G está conectado o conectandose...
+		//Miramos si el internet 3G estï¿½ conectado o conectandose...
 		if (internet_movil == NetworkInfo.State.CONNECTED|| internet_movil == NetworkInfo.State.CONNECTING) 
 		{
 		     ///////////////
-		     //El movil está conectado por 3G
-		     //En este ejemplo mostraríamos mensaje por pantalla
+		     //El movil estï¿½ conectado por 3G
+		     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 		     //Toast.makeText(getApplicationContext(), "Conectado por 3G", Toast.LENGTH_LONG).show();
-		     //Si no esta por 3G comprovamos si está conectado o conectandose al wifi...
+		     //Si no esta por 3G comprovamos si estï¿½ conectado o conectandose al wifi...
 		    Log.i("Estado","Subiendo archivos por 3G"); 
 		    alerta3G();
 		} 
 		else if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) 
 		{
 		     ///////////////
-		     //El movil está conectado por WIFI
-		     //En este ejemplo mostraríamos mensaje por pantalla
+		     //El movil estï¿½ conectado por WIFI
+		     //En este ejemplo mostrarï¿½amos mensaje por pantalla
 		     //Toast.makeText(getApplicationContext(), "Conectado por WIFI", Toast.LENGTH_LONG).show();
 			Log.i("Estado","Subiendo archivos por WIFI"); 
 			
 		}
 		else
 		{
-			Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexión", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "No puedes subir los archivos, no tienes conexiï¿½n", Toast.LENGTH_LONG).show();
 		}
 	}
 	// Crea una alerta de que no hay coordenadas GPS correctas
@@ -1316,7 +1316,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 		{
 						AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				 
-				        builder.setMessage("Estás conectado por 3G. El proceso puede tardar un tiempo. ¿Desea continuar?")
+				        builder.setMessage("Estï¿½s conectado por 3G. El proceso puede tardar un tiempo. ï¿½Desea continuar?")
 				        .setTitle("Confirmacion")
 				        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener()  
 				        {
@@ -1346,7 +1346,7 @@ public class Gps_activity<GPSActivity> extends Activity implements LocationListe
 			org.apache.commons.net.ftp.FTPClient con = new org.apache.commons.net.ftp.FTPClient();
 			try 
 			{
-				con.connect("89.248.100.11");
+				con.connect("ftp.sinapseenergia.com");
 				if (con.login("trazabilidad", "napse1si")) 
 				{
 					con.enterLocalPassiveMode(); // important!

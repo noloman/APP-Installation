@@ -175,7 +175,7 @@ public class ComienzoInstalacion_activity  extends Activity{
 		org.apache.commons.net.ftp.FTPClient con = new org.apache.commons.net.ftp.FTPClient();
 		try 
 		{
-			con.connect("89.248.100.11");
+			con.connect("ftp.sinapseenergia.com");
 			if (con.login("trazabilidad", "napse1si")) 
 			{
 				//creamos en el servidor una carpeta con el nombre del lugar de instalaci�n

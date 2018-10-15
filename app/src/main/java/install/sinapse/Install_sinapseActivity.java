@@ -648,7 +648,7 @@ public class Install_sinapseActivity extends Activity {
         protected Integer doInBackground(String... urls) {
             try {
                 FTPClient ftpClient = new FTPClient();
-                ftpClient.connect(InetAddress.getByName("89.248.100.11"), 21);
+                ftpClient.connect(InetAddress.getByName("ftp.sinapseenergia.com"), 21);
                 ftpClient.login("trazabilidad", "napse1si");
                 ftpClient.makeDirectory("/Instalacion-" + GlobalClass.global_localiz + "/FORZADOS");
                 ftpClient.enterLocalPassiveMode();
